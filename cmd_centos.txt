@@ -1,0 +1,2177 @@
+ng@localhost ~]$ mkdir -p /opt/script && cd /opt/script
+mkdir: cannot create directory ‘/opt/script’: Permission denied
+[quang@localhost ~]$ sudo -i
+[sudo] password for quang: 
+[root@localhost ~]# mkdir -p /opt/script && cd /opt/script
+[root@localhost script]# curl -fsSL https://get.docker.com -o get-docker.sh
+[root@localhost script]# sudo sh get-docker.sh
+# Executing docker install script, commit: 26ff363bcf3b3f5a00498ac43694bf1c7d9ce16c
++ sh -c 'yum install -y -q yum-utils'
+warning: /var/cache/yum/x86_64/7/updates/packages/yum-utils-1.1.31-54.el7_8.noarch.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+Importing GPG key 0xF4A80EB5:
+ Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+ Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+ Package    : centos-release-7-8.2003.0.el7.centos.x86_64 (@anaconda)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
++ sh -c 'yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo'
+Loaded plugins: fastestmirror, langpacks
+adding repo from: https://download.docker.com/linux/centos/docker-ce.repo
+grabbing file https://download.docker.com/linux/centos/docker-ce.repo to /etc/yum.repos.d/docker-ce.repo
+repo saved to /etc/yum.repos.d/docker-ce.repo
++ '[' stable '!=' stable ']'
++ sh -c 'yum makecache'
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirror.tino.org
+ * extras: mirror.tino.org
+ * updates: mirror.tino.org
+base                                                                                                                                                         | 3.6 kB  00:00:00     
+docker-ce-stable                                         | 3.5 kB     00:00     
+extras                                                   | 2.9 kB     00:00     
+updates                                                  | 2.9 kB     00:00     
+(1/9): docker-ce-stable/x86_64/filelists_db                |  21 kB   00:00     
+(2/9): docker-ce-stable/x86_64/updateinfo                  |   55 B   00:00     
+(3/9): docker-ce-stable/x86_64/primary_db                  |  45 kB   00:00     
+(4/9): docker-ce-stable/x86_64/other_db                    | 114 kB   00:00     
+(5/9): extras/7/x86_64/other_db                            | 125 kB   00:00     
+(6/9): base/7/x86_64/other_db                              | 2.6 MB   00:01     
+(7/9): updates/7/x86_64/filelists_db                       | 2.0 MB   00:00     
+(8/9): extras/7/x86_64/filelists_db                        | 217 kB   00:01     
+(9/9): base/7/x86_64/filelists_db                          | 7.1 MB   00:09     
+Metadata Cache Created
++ '[' -n '' ']'
++ sh -c 'yum install -y -q docker-ce'
+warning: /var/cache/yum/x86_64/7/docker-ce-stable/packages/docker-ce-19.03.12-3.el7.x86_64.rpm: Header V4 RSA/SHA512 Signature, key ID 621e9f35: NOKEY
+Public key for docker-ce-19.03.12-3.el7.x86_64.rpm is not installed
+Importing GPG key 0x621E9F35:
+ Userid     : "Docker Release (CE rpm) <docker@docker.com>"
+ Fingerprint: 060a 61c5 1b55 8a7f 742b 77aa c52f eb6b 621e 9f35
+ From       : https://download.docker.com/linux/centos/gpg
+If you would like to use Docker as a non-root user, you should now consider
+adding your user to the "docker" group with something like:
+
+  sudo usermod -aG docker your-user
+
+Remember that you will have to log out and back in for this to take effect!
+
+WARNING: Adding a user to the "docker" group will grant the ability to run
+         containers which can be used to obtain root privileges on the
+         docker host.
+         Refer to https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface
+         for more information.
+[root@localhost script]# sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   638  100   638    0     0    927      0 --:--:-- --:--:-- --:--:--   928
+100 15.4M  100 15.4M    0     0  1081k      0  0:00:14  0:00:14 --:--:-- 2076k
+[root@localhost script]# sudo chmod +x /usr/local/bin/docker-compose
+[root@localhost script]# sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+[root@localhost script]# systemctl enable docker
+Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
+[root@localhost script]# systemctl start docker
+[root@localhost script]# systemctl status docker
+● docker.service - Docker Application Container Engine
+   Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled; vendor preset: disabled)
+   Active: active (running) since Tue 2020-08-04 17:40:02 +07; 8s ago
+     Docs: https://docs.docker.com
+ Main PID: 3779 (dockerd)
+    Tasks: 8
+   Memory: 43.3M
+   CGroup: /system.slice/docker.service
+           └─3779 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/cont...
+
+Aug 04 17:39:59 localhost.localdomain dockerd[3779]: time="2020-08-04T17:39:5...
+Aug 04 17:39:59 localhost.localdomain dockerd[3779]: time="2020-08-04T17:39:5...
+Aug 04 17:39:59 localhost.localdomain dockerd[3779]: time="2020-08-04T17:39:5...
+Aug 04 17:39:59 localhost.localdomain dockerd[3779]: time="2020-08-04T17:39:5...
+Aug 04 17:40:00 localhost.localdomain dockerd[3779]: time="2020-08-04T17:40:0...
+Aug 04 17:40:01 localhost.localdomain dockerd[3779]: time="2020-08-04T17:40:0...
+Aug 04 17:40:01 localhost.localdomain dockerd[3779]: time="2020-08-04T17:40:0...
+Aug 04 17:40:01 localhost.localdomain dockerd[3779]: time="2020-08-04T17:40:0...
+Aug 04 17:40:02 localhost.localdomain dockerd[3779]: time="2020-08-04T17:40:0...
+Aug 04 17:40:02 localhost.localdomain systemd[1]: Started Docker Application ...
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@localhost script]# setenforce 0
+[root@localhost script]# systemctl stop firewalld
+[root@localhost script]# systemctl disable firewalld
+Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.
+Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
+[root@localhost script]# systemctl mask --now firewalld
+Created symlink from /etc/systemd/system/firewalld.service to /dev/null.
+[root@localhost script]# yum update
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirror.tino.org
+ * extras: mirror.tino.org
+ * updates: mirror.tino.org
+Resolving Dependencies
+--> Running transaction check
+---> Package augeas-libs.x86_64 0:1.4.0-9.el7 will be updated
+---> Package augeas-libs.x86_64 0:1.4.0-9.el7_8.1 will be an update
+---> Package bind-export-libs.x86_64 32:9.11.4-16.P2.el7 will be updated
+---> Package bind-export-libs.x86_64 32:9.11.4-16.P2.el7_8.6 will be an update
+---> Package bind-libs.x86_64 32:9.11.4-16.P2.el7 will be updated
+---> Package bind-libs.x86_64 32:9.11.4-16.P2.el7_8.6 will be an update
+---> Package bind-libs-lite.x86_64 32:9.11.4-16.P2.el7 will be updated
+---> Package bind-libs-lite.x86_64 32:9.11.4-16.P2.el7_8.6 will be an update
+---> Package bind-license.noarch 32:9.11.4-16.P2.el7 will be updated
+---> Package bind-license.noarch 32:9.11.4-16.P2.el7_8.6 will be an update
+---> Package bind-utils.x86_64 32:9.11.4-16.P2.el7 will be updated
+---> Package bind-utils.x86_64 32:9.11.4-16.P2.el7_8.6 will be an update
+---> Package binutils.x86_64 0:2.27-43.base.el7 will be updated
+---> Package binutils.x86_64 0:2.27-43.base.el7_8.1 will be an update
+---> Package bpftool.x86_64 0:3.10.0-1127.el7 will be updated
+---> Package bpftool.x86_64 0:3.10.0-1127.18.2.el7 will be an update
+---> Package ca-certificates.noarch 0:2019.2.32-76.el7_7 will be updated
+---> Package ca-certificates.noarch 0:2020.2.41-70.0.el7_8 will be an update
+---> Package dbus.x86_64 1:1.10.24-13.el7_6 will be updated
+---> Package dbus.x86_64 1:1.10.24-14.el7_8 will be an update
+---> Package dbus-libs.x86_64 1:1.10.24-13.el7_6 will be updated
+---> Package dbus-libs.x86_64 1:1.10.24-14.el7_8 will be an update
+---> Package dbus-x11.x86_64 1:1.10.24-13.el7_6 will be updated
+---> Package dbus-x11.x86_64 1:1.10.24-14.el7_8 will be an update
+---> Package device-mapper.x86_64 7:1.02.164-7.el7 will be updated
+---> Package device-mapper.x86_64 7:1.02.164-7.el7_8.2 will be an update
+---> Package device-mapper-event.x86_64 7:1.02.164-7.el7 will be updated
+---> Package device-mapper-event.x86_64 7:1.02.164-7.el7_8.2 will be an update
+---> Package device-mapper-event-libs.x86_64 7:1.02.164-7.el7 will be updated
+---> Package device-mapper-event-libs.x86_64 7:1.02.164-7.el7_8.2 will be an update
+---> Package device-mapper-libs.x86_64 7:1.02.164-7.el7 will be updated
+---> Package device-mapper-libs.x86_64 7:1.02.164-7.el7_8.2 will be an update
+---> Package firefox.x86_64 0:68.5.0-2.el7.centos will be updated
+---> Package firefox.x86_64 0:68.10.0-1.el7.centos will be an update
+---> Package firewall-config.noarch 0:0.6.3-8.el7 will be updated
+---> Package firewall-config.noarch 0:0.6.3-8.el7_8.1 will be an update
+---> Package firewalld.noarch 0:0.6.3-8.el7 will be updated
+---> Package firewalld.noarch 0:0.6.3-8.el7_8.1 will be an update
+---> Package firewalld-filesystem.noarch 0:0.6.3-8.el7 will be updated
+---> Package firewalld-filesystem.noarch 0:0.6.3-8.el7_8.1 will be an update
+---> Package flatpak.x86_64 0:1.0.9-8.el7_7 will be updated
+---> Package flatpak.x86_64 0:1.0.9-9.el7_7 will be an update
+---> Package flatpak-libs.x86_64 0:1.0.9-8.el7_7 will be updated
+---> Package flatpak-libs.x86_64 0:1.0.9-9.el7_7 will be an update
+---> Package freerdp-libs.x86_64 0:2.0.0-1.rc4.el7 will be updated
+---> Package freerdp-libs.x86_64 0:2.0.0-4.rc4.el7_8 will be an update
+---> Package fwupdate-efi.x86_64 0:12-5.el7.centos will be updated
+---> Package fwupdate-efi.x86_64 0:12-6.el7.centos will be an update
+---> Package fwupdate-libs.x86_64 0:12-5.el7.centos will be updated
+---> Package fwupdate-libs.x86_64 0:12-6.el7.centos will be an update
+---> Package git.x86_64 0:1.8.3.1-21.el7_7 will be updated
+---> Package git.x86_64 0:1.8.3.1-23.el7_8 will be an update
+---> Package grub2.x86_64 1:2.02-0.81.el7.centos will be updated
+---> Package grub2.x86_64 1:2.02-0.86.el7.centos will be an update
+---> Package grub2-common.noarch 1:2.02-0.81.el7.centos will be updated
+---> Package grub2-common.noarch 1:2.02-0.86.el7.centos will be an update
+---> Package grub2-pc.x86_64 1:2.02-0.81.el7.centos will be updated
+---> Package grub2-pc.x86_64 1:2.02-0.86.el7.centos will be an update
+---> Package grub2-pc-modules.noarch 1:2.02-0.81.el7.centos will be updated
+---> Package grub2-pc-modules.noarch 1:2.02-0.86.el7.centos will be an update
+---> Package grub2-tools.x86_64 1:2.02-0.81.el7.centos will be updated
+---> Package grub2-tools.x86_64 1:2.02-0.86.el7.centos will be an update
+---> Package grub2-tools-extra.x86_64 1:2.02-0.81.el7.centos will be updated
+---> Package grub2-tools-extra.x86_64 1:2.02-0.86.el7.centos will be an update
+---> Package grub2-tools-minimal.x86_64 1:2.02-0.81.el7.centos will be updated
+---> Package grub2-tools-minimal.x86_64 1:2.02-0.86.el7.centos will be an update
+---> Package http-parser.x86_64 0:2.7.1-8.el7 will be updated
+---> Package http-parser.x86_64 0:2.7.1-8.el7_7.2 will be an update
+---> Package iprutils.x86_64 0:2.4.17.1-3.el7 will be updated
+---> Package iprutils.x86_64 0:2.4.17.1-3.el7_7 will be an update
+---> Package java-1.7.0-openjdk.x86_64 1:1.7.0.251-2.6.21.1.el7 will be updated
+---> Package java-1.7.0-openjdk.x86_64 1:1.7.0.261-2.6.22.2.el7_8 will be an update
+---> Package java-1.7.0-openjdk-headless.x86_64 1:1.7.0.251-2.6.21.1.el7 will be updated
+---> Package java-1.7.0-openjdk-headless.x86_64 1:1.7.0.261-2.6.22.2.el7_8 will be an update
+---> Package java-1.8.0-openjdk.x86_64 1:1.8.0.242.b08-1.el7 will be updated
+---> Package java-1.8.0-openjdk.x86_64 1:1.8.0.252.b09-2.el7_8 will be an update
+---> Package java-1.8.0-openjdk-headless.x86_64 1:1.8.0.242.b08-1.el7 will be updated
+---> Package java-1.8.0-openjdk-headless.x86_64 1:1.8.0.252.b09-2.el7_8 will be an update
+---> Package kernel.x86_64 0:3.10.0-1127.18.2.el7 will be installed
+---> Package kernel-devel.x86_64 0:3.10.0-1127.18.2.el7 will be installed
+---> Package kernel-headers.x86_64 0:3.10.0-1127.el7 will be updated
+---> Package kernel-headers.x86_64 0:3.10.0-1127.18.2.el7 will be an update
+---> Package kernel-tools.x86_64 0:3.10.0-1127.el7 will be updated
+---> Package kernel-tools.x86_64 0:3.10.0-1127.18.2.el7 will be an update
+---> Package kernel-tools-libs.x86_64 0:3.10.0-1127.el7 will be updated
+---> Package kernel-tools-libs.x86_64 0:3.10.0-1127.18.2.el7 will be an update
+---> Package libexif.x86_64 0:0.6.21-6.el7 will be updated
+---> Package libexif.x86_64 0:0.6.21-7.el7_8 will be an update
+---> Package libgudev1.x86_64 0:219-73.el7.1 will be updated
+---> Package libgudev1.x86_64 0:219-73.el7_8.8 will be an update
+---> Package libibverbs.x86_64 0:22.4-1.el7 will be updated
+---> Package libibverbs.x86_64 0:22.4-2.el7_8 will be an update
+---> Package libicu.x86_64 0:50.2-3.el7 will be updated
+---> Package libicu.x86_64 0:50.2-4.el7_7 will be an update
+---> Package libipa_hbac.x86_64 0:1.16.4-37.el7 will be updated
+---> Package libipa_hbac.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package librdmacm.x86_64 0:22.4-1.el7 will be updated
+---> Package librdmacm.x86_64 0:22.4-2.el7_8 will be an update
+---> Package libsmbclient.x86_64 0:4.10.4-10.el7 will be updated
+---> Package libsmbclient.x86_64 0:4.10.4-11.el7_8 will be an update
+---> Package libsss_autofs.x86_64 0:1.16.4-37.el7 will be updated
+---> Package libsss_autofs.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package libsss_certmap.x86_64 0:1.16.4-37.el7 will be updated
+---> Package libsss_certmap.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package libsss_idmap.x86_64 0:1.16.4-37.el7 will be updated
+---> Package libsss_idmap.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package libsss_nss_idmap.x86_64 0:1.16.4-37.el7 will be updated
+---> Package libsss_nss_idmap.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package libsss_sudo.x86_64 0:1.16.4-37.el7 will be updated
+---> Package libsss_sudo.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package libvirt-daemon.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-config-network.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-config-network.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-interface.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-interface.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-network.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-network.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-nodedev.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-nodedev.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-nwfilter.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-nwfilter.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-qemu.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-qemu.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-secret.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-secret.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-storage.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-storage.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-storage-core.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-storage-core.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-storage-disk.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-storage-disk.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-storage-gluster.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-storage-gluster.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-storage-iscsi.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-storage-iscsi.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-storage-logical.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-storage-logical.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-storage-mpath.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-storage-mpath.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-storage-rbd.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-storage-rbd.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-driver-storage-scsi.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-driver-storage-scsi.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-daemon-kvm.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-daemon-kvm.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libvirt-libs.x86_64 0:4.5.0-33.el7 will be updated
+---> Package libvirt-libs.x86_64 0:4.5.0-33.el7_8.1 will be an update
+---> Package libwbclient.x86_64 0:4.10.4-10.el7 will be updated
+---> Package libwbclient.x86_64 0:4.10.4-11.el7_8 will be an update
+---> Package libwinpr.x86_64 0:2.0.0-1.rc4.el7 will be updated
+---> Package libwinpr.x86_64 0:2.0.0-4.rc4.el7_8 will be an update
+---> Package libwvstreams.x86_64 0:4.6.1-11.el7 will be updated
+---> Package libwvstreams.x86_64 0:4.6.1-12.el7_8 will be an update
+---> Package lvm2.x86_64 7:2.02.186-7.el7 will be updated
+---> Package lvm2.x86_64 7:2.02.186-7.el7_8.2 will be an update
+---> Package lvm2-libs.x86_64 7:2.02.186-7.el7 will be updated
+---> Package lvm2-libs.x86_64 7:2.02.186-7.el7_8.2 will be an update
+---> Package mesa-dri-drivers.x86_64 0:18.3.4-7.el7 will be updated
+---> Package mesa-dri-drivers.x86_64 0:18.3.4-7.el7_8.1 will be an update
+---> Package mesa-filesystem.x86_64 0:18.3.4-7.el7 will be updated
+---> Package mesa-filesystem.x86_64 0:18.3.4-7.el7_8.1 will be an update
+---> Package mesa-libEGL.x86_64 0:18.3.4-7.el7 will be updated
+---> Package mesa-libEGL.x86_64 0:18.3.4-7.el7_8.1 will be an update
+---> Package mesa-libGL.x86_64 0:18.3.4-7.el7 will be updated
+---> Package mesa-libGL.x86_64 0:18.3.4-7.el7_8.1 will be an update
+---> Package mesa-libgbm.x86_64 0:18.3.4-7.el7 will be updated
+---> Package mesa-libgbm.x86_64 0:18.3.4-7.el7_8.1 will be an update
+---> Package mesa-libglapi.x86_64 0:18.3.4-7.el7 will be updated
+---> Package mesa-libglapi.x86_64 0:18.3.4-7.el7_8.1 will be an update
+---> Package mesa-libxatracker.x86_64 0:18.3.4-7.el7 will be updated
+---> Package mesa-libxatracker.x86_64 0:18.3.4-7.el7_8.1 will be an update
+---> Package microcode_ctl.x86_64 2:2.1-61.el7 will be updated
+---> Package microcode_ctl.x86_64 2:2.1-61.10.el7_8 will be an update
+---> Package mokutil.x86_64 0:15-2.el7.centos will be updated
+---> Package mokutil.x86_64 0:15-8.el7 will be an update
+---> Package mutter.x86_64 0:3.28.3-20.el7 will be updated
+---> Package mutter.x86_64 0:3.28.3-22.el7_8 will be an update
+---> Package ncompress.x86_64 0:4.2.4.4-3.el7 will be updated
+---> Package ncompress.x86_64 0:4.2.4.4-3.1.el7_8 will be an update
+---> Package net-snmp-libs.x86_64 1:5.7.2-47.el7 will be updated
+---> Package net-snmp-libs.x86_64 1:5.7.2-48.el7_8.1 will be an update
+---> Package ntp.x86_64 0:4.2.6p5-29.el7.centos will be updated
+---> Package ntp.x86_64 0:4.2.6p5-29.el7.centos.2 will be an update
+---> Package ntpdate.x86_64 0:4.2.6p5-29.el7.centos will be updated
+---> Package ntpdate.x86_64 0:4.2.6p5-29.el7.centos.2 will be an update
+---> Package open-vm-tools.x86_64 0:10.3.10-2.el7 will be updated
+---> Package open-vm-tools.x86_64 0:10.3.10-2.el7_8.1 will be an update
+---> Package open-vm-tools-desktop.x86_64 0:10.3.10-2.el7 will be updated
+---> Package open-vm-tools-desktop.x86_64 0:10.3.10-2.el7_8.1 will be an update
+---> Package perl-Git.noarch 0:1.8.3.1-21.el7_7 will be updated
+---> Package perl-Git.noarch 0:1.8.3.1-23.el7_8 will be an update
+---> Package ppp.x86_64 0:2.4.5-33.el7 will be updated
+---> Package ppp.x86_64 0:2.4.5-34.el7_7 will be an update
+---> Package python-firewall.noarch 0:0.6.3-8.el7 will be updated
+---> Package python-firewall.noarch 0:0.6.3-8.el7_8.1 will be an update
+---> Package python-libipa_hbac.x86_64 0:1.16.4-37.el7 will be updated
+---> Package python-libipa_hbac.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package python-perf.x86_64 0:3.10.0-1127.el7 will be updated
+---> Package python-perf.x86_64 0:3.10.0-1127.18.2.el7 will be an update
+---> Package python-requests.noarch 0:2.6.0-8.el7_7 will be updated
+---> Package python-requests.noarch 0:2.6.0-9.el7_8 will be an update
+---> Package python-sss-murmur.x86_64 0:1.16.4-37.el7 will be updated
+---> Package python-sss-murmur.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package python-sssdconfig.noarch 0:1.16.4-37.el7 will be updated
+---> Package python-sssdconfig.noarch 0:1.16.4-37.el7_8.3 will be an update
+---> Package qemu-img.x86_64 10:1.5.3-173.el7 will be updated
+---> Package qemu-img.x86_64 10:1.5.3-173.el7_8.3 will be an update
+---> Package qemu-kvm.x86_64 10:1.5.3-173.el7 will be updated
+---> Package qemu-kvm.x86_64 10:1.5.3-173.el7_8.3 will be an update
+---> Package qemu-kvm-common.x86_64 10:1.5.3-173.el7 will be updated
+---> Package qemu-kvm-common.x86_64 10:1.5.3-173.el7_8.3 will be an update
+---> Package rdma-core.x86_64 0:22.4-1.el7 will be updated
+---> Package rdma-core.x86_64 0:22.4-2.el7_8 will be an update
+---> Package rsyslog.x86_64 0:8.24.0-52.el7 will be updated
+---> Package rsyslog.x86_64 0:8.24.0-52.el7_8.2 will be an update
+---> Package samba-client.x86_64 0:4.10.4-10.el7 will be updated
+---> Package samba-client.x86_64 0:4.10.4-11.el7_8 will be an update
+---> Package samba-client-libs.x86_64 0:4.10.4-10.el7 will be updated
+---> Package samba-client-libs.x86_64 0:4.10.4-11.el7_8 will be an update
+---> Package samba-common.noarch 0:4.10.4-10.el7 will be updated
+---> Package samba-common.noarch 0:4.10.4-11.el7_8 will be an update
+---> Package samba-common-libs.x86_64 0:4.10.4-10.el7 will be updated
+---> Package samba-common-libs.x86_64 0:4.10.4-11.el7_8 will be an update
+---> Package samba-libs.x86_64 0:4.10.4-10.el7 will be updated
+---> Package samba-libs.x86_64 0:4.10.4-11.el7_8 will be an update
+---> Package selinux-policy.noarch 0:3.13.1-266.el7 will be updated
+---> Package selinux-policy.noarch 0:3.13.1-266.el7_8.1 will be an update
+---> Package selinux-policy-targeted.noarch 0:3.13.1-266.el7 will be updated
+---> Package selinux-policy-targeted.noarch 0:3.13.1-266.el7_8.1 will be an update
+---> Package shim-x64.x86_64 0:15-2.el7.centos will be updated
+---> Package shim-x64.x86_64 0:15-8.el7 will be an update
+---> Package sos.noarch 0:3.8-6.el7.centos will be updated
+---> Package sos.noarch 0:3.8-8.el7.centos will be an update
+---> Package sssd.x86_64 0:1.16.4-37.el7 will be updated
+---> Package sssd.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package sssd-ad.x86_64 0:1.16.4-37.el7 will be updated
+---> Package sssd-ad.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package sssd-client.x86_64 0:1.16.4-37.el7 will be updated
+---> Package sssd-client.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package sssd-common.x86_64 0:1.16.4-37.el7 will be updated
+---> Package sssd-common.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package sssd-common-pac.x86_64 0:1.16.4-37.el7 will be updated
+---> Package sssd-common-pac.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package sssd-ipa.x86_64 0:1.16.4-37.el7 will be updated
+---> Package sssd-ipa.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package sssd-krb5.x86_64 0:1.16.4-37.el7 will be updated
+---> Package sssd-krb5.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package sssd-krb5-common.x86_64 0:1.16.4-37.el7 will be updated
+---> Package sssd-krb5-common.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package sssd-ldap.x86_64 0:1.16.4-37.el7 will be updated
+---> Package sssd-ldap.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package sssd-proxy.x86_64 0:1.16.4-37.el7 will be updated
+---> Package sssd-proxy.x86_64 0:1.16.4-37.el7_8.3 will be an update
+---> Package systemd.x86_64 0:219-73.el7.1 will be updated
+---> Package systemd.x86_64 0:219-73.el7_8.8 will be an update
+---> Package systemd-libs.x86_64 0:219-73.el7.1 will be updated
+---> Package systemd-libs.x86_64 0:219-73.el7_8.8 will be an update
+---> Package systemd-python.x86_64 0:219-73.el7.1 will be updated
+---> Package systemd-python.x86_64 0:219-73.el7_8.8 will be an update
+---> Package systemd-sysv.x86_64 0:219-73.el7.1 will be updated
+---> Package systemd-sysv.x86_64 0:219-73.el7_8.8 will be an update
+---> Package tzdata.noarch 0:2019c-1.el7 will be updated
+---> Package tzdata.noarch 0:2020a-1.el7 will be an update
+---> Package tzdata-java.noarch 0:2019c-1.el7 will be updated
+---> Package tzdata-java.noarch 0:2020a-1.el7 will be an update
+---> Package unbound-libs.x86_64 0:1.6.6-3.el7 will be updated
+---> Package unbound-libs.x86_64 0:1.6.6-5.el7_8 will be an update
+---> Package xorg-x11-drv-ati.x86_64 0:19.0.1-3.el7 will be updated
+---> Package xorg-x11-drv-ati.x86_64 0:19.0.1-3.el7_7 will be an update
+---> Package yum-plugin-fastestmirror.noarch 0:1.1.31-53.el7 will be updated
+---> Package yum-plugin-fastestmirror.noarch 0:1.1.31-54.el7_8 will be an update
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package                        Arch   Version                    Repository
+                                                                           Size
+================================================================================
+Installing:
+ kernel                         x86_64 3.10.0-1127.18.2.el7       updates  50 M
+ kernel-devel                   x86_64 3.10.0-1127.18.2.el7       updates  18 M
+Updating:
+ augeas-libs                    x86_64 1.4.0-9.el7_8.1            updates 357 k
+ bind-export-libs               x86_64 32:9.11.4-16.P2.el7_8.6    updates 1.1 M
+ bind-libs                      x86_64 32:9.11.4-16.P2.el7_8.6    updates 156 k
+ bind-libs-lite                 x86_64 32:9.11.4-16.P2.el7_8.6    updates 1.1 M
+ bind-license                   noarch 32:9.11.4-16.P2.el7_8.6    updates  90 k
+ bind-utils                     x86_64 32:9.11.4-16.P2.el7_8.6    updates 259 k
+ binutils                       x86_64 2.27-43.base.el7_8.1       updates 5.9 M
+ bpftool                        x86_64 3.10.0-1127.18.2.el7       updates 8.4 M
+ ca-certificates                noarch 2020.2.41-70.0.el7_8       updates 382 k
+ dbus                           x86_64 1:1.10.24-14.el7_8         updates 245 k
+ dbus-libs                      x86_64 1:1.10.24-14.el7_8         updates 169 k
+ dbus-x11                       x86_64 1:1.10.24-14.el7_8         updates  48 k
+ device-mapper                  x86_64 7:1.02.164-7.el7_8.2       updates 295 k
+ device-mapper-event            x86_64 7:1.02.164-7.el7_8.2       updates 191 k
+ device-mapper-event-libs       x86_64 7:1.02.164-7.el7_8.2       updates 190 k
+ device-mapper-libs             x86_64 7:1.02.164-7.el7_8.2       updates 324 k
+ firefox                        x86_64 68.10.0-1.el7.centos       updates  94 M
+ firewall-config                noarch 0.6.3-8.el7_8.1            updates 137 k
+ firewalld                      noarch 0.6.3-8.el7_8.1            updates 443 k
+ firewalld-filesystem           noarch 0.6.3-8.el7_8.1            updates  51 k
+ flatpak                        x86_64 1.0.9-9.el7_7              updates 949 k
+ flatpak-libs                   x86_64 1.0.9-9.el7_7              updates 595 k
+ freerdp-libs                   x86_64 2.0.0-4.rc4.el7_8          updates 780 k
+ fwupdate-efi                   x86_64 12-6.el7.centos            updates  58 k
+ fwupdate-libs                  x86_64 12-6.el7.centos            updates  27 k
+ git                            x86_64 1.8.3.1-23.el7_8           updates 4.4 M
+ grub2                          x86_64 1:2.02-0.86.el7.centos     updates  32 k
+ grub2-common                   noarch 1:2.02-0.86.el7.centos     updates 729 k
+ grub2-pc                       x86_64 1:2.02-0.86.el7.centos     updates  32 k
+ grub2-pc-modules               noarch 1:2.02-0.86.el7.centos     updates 850 k
+ grub2-tools                    x86_64 1:2.02-0.86.el7.centos     updates 1.8 M
+ grub2-tools-extra              x86_64 1:2.02-0.86.el7.centos     updates 1.0 M
+ grub2-tools-minimal            x86_64 1:2.02-0.86.el7.centos     updates 174 k
+ http-parser                    x86_64 2.7.1-8.el7_7.2            updates  29 k
+ iprutils                       x86_64 2.4.17.1-3.el7_7           updates 243 k
+ java-1.7.0-openjdk             x86_64 1:1.7.0.261-2.6.22.2.el7_8 updates 257 k
+ java-1.7.0-openjdk-headless    x86_64 1:1.7.0.261-2.6.22.2.el7_8 updates  26 M
+ java-1.8.0-openjdk             x86_64 1:1.8.0.252.b09-2.el7_8    updates 295 k
+ java-1.8.0-openjdk-headless    x86_64 1:1.8.0.252.b09-2.el7_8    updates  32 M
+ kernel-headers                 x86_64 3.10.0-1127.18.2.el7       updates 9.0 M
+ kernel-tools                   x86_64 3.10.0-1127.18.2.el7       updates 8.1 M
+ kernel-tools-libs              x86_64 3.10.0-1127.18.2.el7       updates 8.0 M
+ libexif                        x86_64 0.6.21-7.el7_8             updates 348 k
+ libgudev1                      x86_64 219-73.el7_8.8             updates 107 k
+ libibverbs                     x86_64 22.4-2.el7_8               updates 268 k
+ libicu                         x86_64 50.2-4.el7_7               updates 6.9 M
+ libipa_hbac                    x86_64 1.16.4-37.el7_8.3          updates 150 k
+ librdmacm                      x86_64 22.4-2.el7_8               updates  64 k
+ libsmbclient                   x86_64 4.10.4-11.el7_8            updates 142 k
+ libsss_autofs                  x86_64 1.16.4-37.el7_8.3          updates 152 k
+ libsss_certmap                 x86_64 1.16.4-37.el7_8.3          updates 179 k
+ libsss_idmap                   x86_64 1.16.4-37.el7_8.3          updates 155 k
+ libsss_nss_idmap               x86_64 1.16.4-37.el7_8.3          updates 161 k
+ libsss_sudo                    x86_64 1.16.4-37.el7_8.3          updates 151 k
+ libvirt-daemon                 x86_64 4.5.0-33.el7_8.1           updates 843 k
+ libvirt-daemon-config-network  x86_64 4.5.0-33.el7_8.1           updates 202 k
+ libvirt-daemon-driver-interface
+                                x86_64 4.5.0-33.el7_8.1           updates 240 k
+ libvirt-daemon-driver-network  x86_64 4.5.0-33.el7_8.1           updates 415 k
+ libvirt-daemon-driver-nodedev  x86_64 4.5.0-33.el7_8.1           updates 240 k
+ libvirt-daemon-driver-nwfilter x86_64 4.5.0-33.el7_8.1           updates 263 k
+ libvirt-daemon-driver-qemu     x86_64 4.5.0-33.el7_8.1           updates 750 k
+ libvirt-daemon-driver-secret   x86_64 4.5.0-33.el7_8.1           updates 230 k
+ libvirt-daemon-driver-storage  x86_64 4.5.0-33.el7_8.1           updates 201 k
+ libvirt-daemon-driver-storage-core
+                                x86_64 4.5.0-33.el7_8.1           updates 440 k
+ libvirt-daemon-driver-storage-disk
+                                x86_64 4.5.0-33.el7_8.1           updates 231 k
+ libvirt-daemon-driver-storage-gluster
+                                x86_64 4.5.0-33.el7_8.1           updates 239 k
+ libvirt-daemon-driver-storage-iscsi
+                                x86_64 4.5.0-33.el7_8.1           updates 229 k
+ libvirt-daemon-driver-storage-logical
+                                x86_64 4.5.0-33.el7_8.1           updates 232 k
+ libvirt-daemon-driver-storage-mpath
+                                x86_64 4.5.0-33.el7_8.1           updates 227 k
+ libvirt-daemon-driver-storage-rbd
+                                x86_64 4.5.0-33.el7_8.1           updates 234 k
+ libvirt-daemon-driver-storage-scsi
+                                x86_64 4.5.0-33.el7_8.1           updates 229 k
+ libvirt-daemon-kvm             x86_64 4.5.0-33.el7_8.1           updates 200 k
+ libvirt-libs                   x86_64 4.5.0-33.el7_8.1           updates 4.2 M
+ libwbclient                    x86_64 4.10.4-11.el7_8            updates 113 k
+ libwinpr                       x86_64 2.0.0-4.rc4.el7_8          updates 322 k
+ libwvstreams                   x86_64 4.6.1-12.el7_8             updates 653 k
+ lvm2                           x86_64 7:2.02.186-7.el7_8.2       updates 1.3 M
+ lvm2-libs                      x86_64 7:2.02.186-7.el7_8.2       updates 1.1 M
+ mesa-dri-drivers               x86_64 18.3.4-7.el7_8.1           updates 7.2 M
+ mesa-filesystem                x86_64 18.3.4-7.el7_8.1           updates  18 k
+ mesa-libEGL                    x86_64 18.3.4-7.el7_8.1           updates 109 k
+ mesa-libGL                     x86_64 18.3.4-7.el7_8.1           updates 165 k
+ mesa-libgbm                    x86_64 18.3.4-7.el7_8.1           updates  39 k
+ mesa-libglapi                  x86_64 18.3.4-7.el7_8.1           updates  46 k
+ mesa-libxatracker              x86_64 18.3.4-7.el7_8.1           updates 1.3 M
+ microcode_ctl                  x86_64 2:2.1-61.10.el7_8          updates 2.7 M
+ mokutil                        x86_64 15-8.el7                   updates  42 k
+ mutter                         x86_64 3.28.3-22.el7_8            updates 2.3 M
+ ncompress                      x86_64 4.2.4.4-3.1.el7_8          updates  27 k
+ net-snmp-libs                  x86_64 1:5.7.2-48.el7_8.1         updates 751 k
+ ntp                            x86_64 4.2.6p5-29.el7.centos.2    updates 549 k
+ ntpdate                        x86_64 4.2.6p5-29.el7.centos.2    updates  87 k
+ open-vm-tools                  x86_64 10.3.10-2.el7_8.1          updates 674 k
+ open-vm-tools-desktop          x86_64 10.3.10-2.el7_8.1          updates 170 k
+ perl-Git                       noarch 1.8.3.1-23.el7_8           updates  56 k
+ ppp                            x86_64 2.4.5-34.el7_7             updates 358 k
+ python-firewall                noarch 0.6.3-8.el7_8.1            updates 354 k
+ python-libipa_hbac             x86_64 1.16.4-37.el7_8.3          updates 143 k
+ python-perf                    x86_64 3.10.0-1127.18.2.el7       updates 8.1 M
+ python-requests                noarch 2.6.0-9.el7_8              updates  94 k
+ python-sss-murmur              x86_64 1.16.4-37.el7_8.3          updates 133 k
+ python-sssdconfig              noarch 1.16.4-37.el7_8.3          updates 169 k
+ qemu-img                       x86_64 10:1.5.3-173.el7_8.3       updates 703 k
+ qemu-kvm                       x86_64 10:1.5.3-173.el7_8.3       updates 1.9 M
+ qemu-kvm-common                x86_64 10:1.5.3-173.el7_8.3       updates 438 k
+ rdma-core                      x86_64 22.4-2.el7_8               updates  51 k
+ rsyslog                        x86_64 8.24.0-52.el7_8.2          updates 621 k
+ samba-client                   x86_64 4.10.4-11.el7_8            updates 642 k
+ samba-client-libs              x86_64 4.10.4-11.el7_8            updates 5.0 M
+ samba-common                   noarch 4.10.4-11.el7_8            updates 212 k
+ samba-common-libs              x86_64 4.10.4-11.el7_8            updates 176 k
+ samba-libs                     x86_64 4.10.4-11.el7_8            updates 271 k
+ selinux-policy                 noarch 3.13.1-266.el7_8.1         updates 497 k
+ selinux-policy-targeted        noarch 3.13.1-266.el7_8.1         updates 7.0 M
+ shim-x64                       x86_64 15-8.el7                   updates 680 k
+ sos                            noarch 3.8-8.el7.centos           updates 517 k
+ sssd                           x86_64 1.16.4-37.el7_8.3          updates 142 k
+ sssd-ad                        x86_64 1.16.4-37.el7_8.3          updates 276 k
+ sssd-client                    x86_64 1.16.4-37.el7_8.3          updates 211 k
+ sssd-common                    x86_64 1.16.4-37.el7_8.3          updates 1.4 M
+ sssd-common-pac                x86_64 1.16.4-37.el7_8.3          updates 216 k
+ sssd-ipa                       x86_64 1.16.4-37.el7_8.3          updates 368 k
+ sssd-krb5                      x86_64 1.16.4-37.el7_8.3          updates 184 k
+ sssd-krb5-common               x86_64 1.16.4-37.el7_8.3          updates 217 k
+ sssd-ldap                      x86_64 1.16.4-37.el7_8.3          updates 236 k
+ sssd-proxy                     x86_64 1.16.4-37.el7_8.3          updates 178 k
+ systemd                        x86_64 219-73.el7_8.8             updates 5.1 M
+ systemd-libs                   x86_64 219-73.el7_8.8             updates 416 k
+ systemd-python                 x86_64 219-73.el7_8.8             updates 143 k
+ systemd-sysv                   x86_64 219-73.el7_8.8             updates  94 k
+ tzdata                         noarch 2020a-1.el7                updates 495 k
+ tzdata-java                    noarch 2020a-1.el7                updates 188 k
+ unbound-libs                   x86_64 1.6.6-5.el7_8              updates 406 k
+ xorg-x11-drv-ati               x86_64 19.0.1-3.el7_7             updates 166 k
+ yum-plugin-fastestmirror       noarch 1.1.31-54.el7_8            updates  34 k
+
+Transaction Summary
+================================================================================
+Install    2 Packages
+Upgrade  135 Packages
+
+Total size: 354 M
+Is this ok [y/d/N]: y
+Downloading packages:
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Updating   : systemd-libs-219-73.el7_8.8.x86_64                         1/272 
+  Updating   : 1:dbus-libs-1.10.24-14.el7_8.x86_64                        2/272 
+  Updating   : libsss_certmap-1.16.4-37.el7_8.3.x86_64                    3/272 
+  Updating   : libsss_idmap-1.16.4-37.el7_8.3.x86_64                      4/272 
+  Updating   : 1:grub2-common-2.02-0.86.el7.centos.noarch                 5/272 
+  Updating   : mesa-libglapi-18.3.4-7.el7_8.1.x86_64                      6/272 
+  Updating   : mesa-libgbm-18.3.4-7.el7_8.1.x86_64                        7/272 
+  Updating   : systemd-219-73.el7_8.8.x86_64                              8/272 
+  Updating   : 1:dbus-1.10.24-14.el7_8.x86_64                             9/272 
+  Updating   : 7:device-mapper-libs-1.02.164-7.el7_8.2.x86_64            10/272 
+  Updating   : 7:device-mapper-1.02.164-7.el7_8.2.x86_64                 11/272 
+  Updating   : libvirt-libs-4.5.0-33.el7_8.1.x86_64                      12/272 
+  Updating   : samba-common-4.10.4-11.el7_8.noarch                       13/272 
+  Updating   : libwbclient-4.10.4-11.el7_8.x86_64                        14/272 
+  Updating   : samba-client-libs-4.10.4-11.el7_8.x86_64                  15/272 
+  Updating   : samba-libs-4.10.4-11.el7_8.x86_64                         16/272 
+  Updating   : samba-common-libs-4.10.4-11.el7_8.x86_64                  17/272 
+  Updating   : 1:grub2-tools-minimal-2.02-0.86.el7.centos.x86_64         18/272 
+  Updating   : 7:device-mapper-event-libs-1.02.164-7.el7_8.2.x86_64      19/272 
+  Updating   : 10:qemu-img-1.5.3-173.el7_8.3.x86_64                      20/272 
+  Updating   : ca-certificates-2020.2.41-70.0.el7_8.noarch               21/272 
+  Updating   : 1:grub2-tools-2.02-0.86.el7.centos.x86_64                 22/272 
+  Updating   : libsmbclient-4.10.4-11.el7_8.x86_64                       23/272 
+  Updating   : 1:dbus-x11-1.10.24-14.el7_8.x86_64                        24/272 
+  Updating   : rdma-core-22.4-2.el7_8.x86_64                             25/272 
+  Updating   : libibverbs-22.4-2.el7_8.x86_64                            26/272 
+  Updating   : 32:bind-license-9.11.4-16.P2.el7_8.6.noarch               27/272 
+  Updating   : 32:bind-libs-lite-9.11.4-16.P2.el7_8.6.x86_64             28/272 
+  Updating   : libipa_hbac-1.16.4-37.el7_8.3.x86_64                      29/272 
+  Updating   : tzdata-java-2020a-1.el7.noarch                            30/272 
+  Updating   : 1:java-1.8.0-openjdk-headless-1.8.0.252.b09-2.el7_8.x8    31/272 
+warning: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64/jre/lib/security/java.security created as /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64/jre/lib/security/java.security.rpmnew
+restored /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64/jre/lib/security/java.security.rpmnew to /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64/jre/lib/security/java.security
+  Updating   : libicu-50.2-4.el7_7.x86_64                                32/272 
+  Updating   : open-vm-tools-10.3.10-2.el7_8.1.x86_64                    33/272 
+  Updating   : 1:java-1.7.0-openjdk-headless-1.7.0.261-2.6.22.2.el7_8    34/272 
+  Updating   : 32:bind-libs-9.11.4-16.P2.el7_8.6.x86_64                  35/272 
+  Updating   : 32:bind-utils-9.11.4-16.P2.el7_8.6.x86_64                 36/272 
+  Updating   : librdmacm-22.4-2.el7_8.x86_64                             37/272 
+  Updating   : 1:grub2-tools-extra-2.02-0.86.el7.centos.x86_64           38/272 
+  Updating   : 7:device-mapper-event-1.02.164-7.el7_8.2.x86_64           39/272 
+  Updating   : 7:lvm2-libs-2.02.186-7.el7_8.2.x86_64                     40/272 
+  Updating   : 7:lvm2-2.02.186-7.el7_8.2.x86_64                          41/272 
+  Updating   : ntpdate-4.2.6p5-29.el7.centos.2.x86_64                    42/272 
+  Updating   : 10:qemu-kvm-common-1.5.3-173.el7_8.3.x86_64               43/272 
+  Updating   : 10:qemu-kvm-1.5.3-173.el7_8.3.x86_64                      44/272 
+  Updating   : systemd-sysv-219-73.el7_8.8.x86_64                        45/272 
+  Updating   : libvirt-daemon-4.5.0-33.el7_8.1.x86_64                    46/272 
+  Updating   : libvirt-daemon-driver-storage-core-4.5.0-33.el7_8.1.x8    47/272 
+  Updating   : libvirt-daemon-driver-network-4.5.0-33.el7_8.1.x86_64     48/272 
+  Updating   : libvirt-daemon-driver-qemu-4.5.0-33.el7_8.1.x86_64        49/272 
+  Updating   : libvirt-daemon-driver-storage-rbd-4.5.0-33.el7_8.1.x86    50/272 
+  Updating   : libvirt-daemon-driver-storage-logical-4.5.0-33.el7_8.1    51/272 
+  Updating   : libvirt-daemon-driver-storage-scsi-4.5.0-33.el7_8.1.x8    52/272 
+  Updating   : libvirt-daemon-driver-storage-disk-4.5.0-33.el7_8.1.x8    53/272 
+  Updating   : libvirt-daemon-driver-storage-gluster-4.5.0-33.el7_8.1    54/272 
+  Updating   : libvirt-daemon-driver-storage-iscsi-4.5.0-33.el7_8.1.x    55/272 
+  Updating   : libvirt-daemon-driver-storage-mpath-4.5.0-33.el7_8.1.x    56/272 
+  Updating   : libvirt-daemon-driver-storage-4.5.0-33.el7_8.1.x86_64     57/272 
+  Updating   : libvirt-daemon-driver-nodedev-4.5.0-33.el7_8.1.x86_64     58/272 
+  Updating   : libvirt-daemon-driver-nwfilter-4.5.0-33.el7_8.1.x86_64    59/272 
+  Updating   : libvirt-daemon-driver-secret-4.5.0-33.el7_8.1.x86_64      60/272 
+  Updating   : libvirt-daemon-driver-interface-4.5.0-33.el7_8.1.x86_6    61/272 
+  Updating   : 1:grub2-pc-modules-2.02-0.86.el7.centos.noarch            62/272 
+  Updating   : 1:grub2-pc-2.02-0.86.el7.centos.x86_64                    63/272 
+  Updating   : libgudev1-219-73.el7_8.8.x86_64                           64/272 
+  Updating   : libwinpr-2.0.0-4.rc4.el7_8.x86_64                         65/272 
+  Updating   : flatpak-libs-1.0.9-9.el7_7.x86_64                         66/272 
+  Updating   : flatpak-1.0.9-9.el7_7.x86_64                              67/272 
+  Updating   : perl-Git-1.8.3.1-23.el7_8.noarch                          68/272 
+  Updating   : git-1.8.3.1-23.el7_8.x86_64                               69/272 
+  Updating   : libsss_sudo-1.16.4-37.el7_8.3.x86_64                      70/272 
+  Updating   : mesa-filesystem-18.3.4-7.el7_8.1.x86_64                   71/272 
+  Updating   : python-firewall-0.6.3-8.el7_8.1.noarch                    72/272 
+  Updating   : libsss_nss_idmap-1.16.4-37.el7_8.3.x86_64                 73/272 
+  Updating   : sssd-client-1.16.4-37.el7_8.3.x86_64                      74/272 
+  Updating   : python-sssdconfig-1.16.4-37.el7_8.3.noarch                75/272 
+  Updating   : firewalld-filesystem-0.6.3-8.el7_8.1.noarch               76/272 
+  Updating   : firewalld-0.6.3-8.el7_8.1.noarch                          77/272 
+  Updating   : selinux-policy-3.13.1-266.el7_8.1.noarch                  78/272 
+  Updating   : mokutil-15-8.el7.x86_64                                   79/272 
+  Updating   : shim-x64-15-8.el7.x86_64                                  80/272 
+  Updating   : fwupdate-efi-12-6.el7.centos.x86_64                       81/272 
+  Updating   : libsss_autofs-1.16.4-37.el7_8.3.x86_64                    82/272 
+  Updating   : http-parser-2.7.1-8.el7_7.2.x86_64                        83/272 
+  Updating   : sssd-common-1.16.4-37.el7_8.3.x86_64                      84/272 
+  Updating   : sssd-krb5-common-1.16.4-37.el7_8.3.x86_64                 85/272 
+  Updating   : sssd-common-pac-1.16.4-37.el7_8.3.x86_64                  86/272 
+  Updating   : sssd-ipa-1.16.4-37.el7_8.3.x86_64                         87/272 
+  Updating   : sssd-ad-1.16.4-37.el7_8.3.x86_64                          88/272 
+  Updating   : sssd-krb5-1.16.4-37.el7_8.3.x86_64                        89/272 
+  Updating   : sssd-ldap-1.16.4-37.el7_8.3.x86_64                        90/272 
+  Updating   : sssd-proxy-1.16.4-37.el7_8.3.x86_64                       91/272 
+  Updating   : kernel-tools-libs-3.10.0-1127.18.2.el7.x86_64             92/272 
+  Updating   : kernel-tools-3.10.0-1127.18.2.el7.x86_64                  93/272 
+  Updating   : sssd-1.16.4-37.el7_8.3.x86_64                             94/272 
+  Updating   : fwupdate-libs-12-6.el7.centos.x86_64                      95/272 
+  Updating   : selinux-policy-targeted-3.13.1-266.el7_8.1.noarch         96/272 
+  Updating   : firewall-config-0.6.3-8.el7_8.1.noarch                    97/272 
+  Updating   : mesa-dri-drivers-18.3.4-7.el7_8.1.x86_64                  98/272 
+  Updating   : freerdp-libs-2.0.0-4.rc4.el7_8.x86_64                     99/272 
+  Updating   : mutter-3.28.3-22.el7_8.x86_64                            100/272 
+  Updating   : 1:grub2-2.02-0.86.el7.centos.x86_64                      101/272 
+  Updating   : libvirt-daemon-kvm-4.5.0-33.el7_8.1.x86_64               102/272 
+  Updating   : libvirt-daemon-config-network-4.5.0-33.el7_8.1.x86_64    103/272 
+  Updating   : ntp-4.2.6p5-29.el7.centos.2.x86_64                       104/272 
+  Updating   : 1:java-1.7.0-openjdk-1.7.0.261-2.6.22.2.el7_8.x86_64     105/272 
+  Updating   : open-vm-tools-desktop-10.3.10-2.el7_8.1.x86_64           106/272 
+  Updating   : 1:java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64        107/272 
+  Updating   : python-libipa_hbac-1.16.4-37.el7_8.3.x86_64              108/272 
+  Updating   : samba-client-4.10.4-11.el7_8.x86_64                      109/272 
+  Updating   : python-requests-2.6.0-9.el7_8.noarch                     110/272 
+  Updating   : rsyslog-8.24.0-52.el7_8.2.x86_64                         111/272 
+  Updating   : unbound-libs-1.6.6-5.el7_8.x86_64                        112/272 
+  Updating   : 2:microcode_ctl-2.1-61.10.el7_8.x86_64                   113/272 
+  Updating   : systemd-python-219-73.el7_8.8.x86_64                     114/272 
+  Updating   : ppp-2.4.5-34.el7_7.x86_64                                115/272 
+  Updating   : xorg-x11-drv-ati-19.0.1-3.el7_7.x86_64                   116/272 
+  Updating   : mesa-libEGL-18.3.4-7.el7_8.1.x86_64                      117/272 
+  Updating   : mesa-libGL-18.3.4-7.el7_8.1.x86_64                       118/272 
+  Updating   : firefox-68.10.0-1.el7.centos.x86_64                      119/272 
+  Updating   : libwvstreams-4.6.1-12.el7_8.x86_64                       120/272 
+  Installing : kernel-devel-3.10.0-1127.18.2.el7.x86_64                 121/272 
+  Updating   : kernel-headers-3.10.0-1127.18.2.el7.x86_64               122/272 
+  Updating   : bpftool-3.10.0-1127.18.2.el7.x86_64                      123/272 
+  Updating   : libexif-0.6.21-7.el7_8.x86_64                            124/272 
+  Updating   : ncompress-4.2.4.4-3.1.el7_8.x86_64                       125/272 
+  Updating   : python-sss-murmur-1.16.4-37.el7_8.3.x86_64               126/272 
+  Updating   : 1:net-snmp-libs-5.7.2-48.el7_8.1.x86_64                  127/272 
+  Updating   : yum-plugin-fastestmirror-1.1.31-54.el7_8.noarch          128/272 
+  Updating   : tzdata-2020a-1.el7.noarch                                129/272 
+  Updating   : mesa-libxatracker-18.3.4-7.el7_8.1.x86_64                130/272 
+  Updating   : iprutils-2.4.17.1-3.el7_7.x86_64                         131/272 
+  Updating   : augeas-libs-1.4.0-9.el7_8.1.x86_64                       132/272 
+  Updating   : binutils-2.27-43.base.el7_8.1.x86_64                     133/272 
+  Installing : kernel-3.10.0-1127.18.2.el7.x86_64                       134/272 
+  Updating   : 32:bind-export-libs-9.11.4-16.P2.el7_8.6.x86_64          135/272 
+  Updating   : python-perf-3.10.0-1127.18.2.el7.x86_64                  136/272 
+  Updating   : sos-3.8-8.el7.centos.noarch                              137/272 
+  Cleanup    : libvirt-daemon-kvm-4.5.0-33.el7.x86_64                   138/272 
+  Cleanup    : samba-client-4.10.4-10.el7.x86_64                        139/272 
+  Cleanup    : libvirt-daemon-driver-storage-4.5.0-33.el7.x86_64        140/272 
+  Cleanup    : sssd-1.16.4-37.el7.x86_64                                141/272 
+  Cleanup    : sssd-ad-1.16.4-37.el7.x86_64                             142/272 
+  Cleanup    : sssd-ipa-1.16.4-37.el7.x86_64                            143/272 
+  Cleanup    : libsmbclient-4.10.4-10.el7.x86_64                        144/272 
+  Cleanup    : sssd-common-pac-1.16.4-37.el7.x86_64                     145/272 
+  Cleanup    : sssd-ldap-1.16.4-37.el7.x86_64                           146/272 
+  Cleanup    : sssd-krb5-1.16.4-37.el7.x86_64                           147/272 
+  Cleanup    : libvirt-daemon-driver-qemu-4.5.0-33.el7.x86_64           148/272 
+  Cleanup    : sssd-proxy-1.16.4-37.el7.x86_64                          149/272 
+  Cleanup    : libvirt-daemon-driver-nodedev-4.5.0-33.el7.x86_64        150/272 
+  Cleanup    : 32:bind-utils-9.11.4-16.P2.el7.x86_64                    151/272 
+  Cleanup    : libvirt-daemon-driver-storage-disk-4.5.0-33.el7.x86_64   152/272 
+  Cleanup    : libvirt-daemon-driver-storage-logical-4.5.0-33.el7.x86   153/272 
+  Cleanup    : 7:lvm2-2.02.186-7.el7.x86_64                             154/272 
+  Cleanup    : libvirt-daemon-driver-storage-mpath-4.5.0-33.el7.x86_6   155/272 
+  Cleanup    : libvirt-daemon-driver-interface-4.5.0-33.el7.x86_64      156/272 
+  Cleanup    : 7:lvm2-libs-2.02.186-7.el7.x86_64                        157/272 
+  Cleanup    : 7:device-mapper-event-1.02.164-7.el7.x86_64              158/272 
+  Cleanup    : libvirt-daemon-driver-storage-scsi-4.5.0-33.el7.x86_64   159/272 
+  Cleanup    : libvirt-daemon-driver-storage-iscsi-4.5.0-33.el7.x86_6   160/272 
+  Cleanup    : libvirt-daemon-driver-storage-gluster-4.5.0-33.el7.x86   161/272 
+  Cleanup    : libvirt-daemon-driver-storage-rbd-4.5.0-33.el7.x86_64    162/272 
+  Cleanup    : libvirt-daemon-driver-storage-core-4.5.0-33.el7.x86_64   163/272 
+  Cleanup    : libvirt-daemon-driver-nwfilter-4.5.0-33.el7.x86_64       164/272 
+  Cleanup    : libvirt-daemon-driver-secret-4.5.0-33.el7.x86_64         165/272 
+  Cleanup    : 10:qemu-kvm-1.5.3-173.el7.x86_64                         166/272 
+  Cleanup    : mutter-3.28.3-20.el7.x86_64                              167/272 
+  Cleanup    : firewall-config-0.6.3-8.el7.noarch                       168/272 
+  Cleanup    : firewalld-0.6.3-8.el7.noarch                             169/272 
+  Cleanup    : libvirt-daemon-config-network-4.5.0-33.el7.x86_64        170/272 
+  Cleanup    : libvirt-daemon-driver-network-4.5.0-33.el7.x86_64        171/272 
+  Cleanup    : libvirt-daemon-4.5.0-33.el7.x86_64                       172/272 
+  Cleanup    : 1:dbus-x11-1.10.24-13.el7_6.x86_64                       173/272 
+  Cleanup    : 32:bind-libs-9.11.4-16.P2.el7.x86_64                     174/272 
+  Cleanup    : sssd-krb5-common-1.16.4-37.el7.x86_64                    175/272 
+  Cleanup    : sssd-common-1.16.4-37.el7.x86_64                         176/272 
+  Cleanup    : systemd-python-219-73.el7.1.x86_64                       177/272 
+  Cleanup    : mesa-libEGL-18.3.4-7.el7.x86_64                          178/272 
+  Cleanup    : open-vm-tools-desktop-10.3.10-2.el7.x86_64               179/272 
+  Cleanup    : open-vm-tools-10.3.10-2.el7.x86_64                       180/272 
+  Cleanup    : 1:java-1.7.0-openjdk-1.7.0.251-2.6.21.1.el7.x86_64       181/272 
+  Cleanup    : 1:java-1.7.0-openjdk-headless-1.7.0.251-2.6.21.1.el7.x   182/272 
+  Cleanup    : sssd-client-1.16.4-37.el7.x86_64                         183/272 
+  Cleanup    : libvirt-libs-4.5.0-33.el7.x86_64                         184/272 
+  Cleanup    : librdmacm-22.4-1.el7.x86_64                              185/272 
+  Cleanup    : mesa-dri-drivers-18.3.4-7.el7.x86_64                     186/272 
+  Cleanup    : xorg-x11-drv-ati-19.0.1-3.el7.x86_64                     187/272 
+  Cleanup    : rsyslog-8.24.0-52.el7.x86_64                             188/272 
+  Cleanup    : ntp-4.2.6p5-29.el7.centos.x86_64                         189/272 
+  Cleanup    : systemd-sysv-219-73.el7.1.x86_64                         190/272 
+  Cleanup    : flatpak-libs-1.0.9-8.el7_7.x86_64                        191/272 
+  Cleanup    : flatpak-1.0.9-8.el7_7.x86_64                             192/272 
+  Cleanup    : python-requests-2.6.0-8.el7_7.noarch                     193/272 
+  Cleanup    : 2:microcode_ctl-2.1-61.el7.x86_64                        194/272 
+  Cleanup    : selinux-policy-targeted-3.13.1-266.el7.noarch            195/272 
+  Cleanup    : 1:grub2-2.02-0.81.el7.centos.x86_64                      196/272 
+  Cleanup    : 1:grub2-pc-2.02-0.81.el7.centos.x86_64                   197/272 
+  Cleanup    : 1:grub2-pc-modules-2.02-0.81.el7.centos.noarch           198/272 
+  Cleanup    : firefox-68.5.0-2.el7.centos.x86_64                       199/272 
+  Cleanup    : 1:grub2-tools-extra-2.02-0.81.el7.centos.x86_64          200/272 
+  Cleanup    : 1:grub2-tools-2.02-0.81.el7.centos.x86_64                201/272 
+  Cleanup    : 1:grub2-tools-minimal-2.02-0.81.el7.centos.x86_64        202/272 
+  Cleanup    : ntpdate-4.2.6p5-29.el7.centos.x86_64                     203/272 
+  Cleanup    : mesa-libgbm-18.3.4-7.el7.x86_64                          204/272 
+  Cleanup    : libibverbs-22.4-1.el7.x86_64                             205/272 
+  Cleanup    : rdma-core-22.4-1.el7.x86_64                              206/272 
+  Cleanup    : samba-common-libs-4.10.4-10.el7.x86_64                   207/272 
+  Cleanup    : samba-libs-4.10.4-10.el7.x86_64                          208/272 
+  Cleanup    : samba-client-libs-4.10.4-10.el7.x86_64                   209/272 
+  Cleanup    : libwbclient-4.10.4-10.el7.x86_64                         210/272 
+  Cleanup    : samba-common-4.10.4-10.el7.noarch                        211/272 
+  Cleanup    : 32:bind-libs-lite-9.11.4-16.P2.el7.x86_64                212/272 
+  Cleanup    : libgudev1-219-73.el7.1.x86_64                            213/272 
+  Cleanup    : 10:qemu-kvm-common-1.5.3-173.el7.x86_64                  214/272 
+  Cleanup    : 7:device-mapper-event-libs-1.02.164-7.el7.x86_64         215/272 
+  Cleanup    : 7:device-mapper-1.02.164-7.el7.x86_64                    216/272 
+  Cleanup    : 7:device-mapper-libs-1.02.164-7.el7.x86_64               217/272 
+  Cleanup    : perl-Git-1.8.3.1-21.el7_7.noarch                         218/272 
+  Cleanup    : git-1.8.3.1-21.el7_7.x86_64                              219/272 
+  Cleanup    : fwupdate-libs-12-5.el7.centos.x86_64                     220/272 
+  Cleanup    : fwupdate-efi-12-5.el7.centos.x86_64                      221/272 
+  Cleanup    : shim-x64-15-2.el7.centos.x86_64                          222/272 
+  Cleanup    : libwvstreams-4.6.1-11.el7.x86_64                         223/272 
+  Cleanup    : kernel-tools-3.10.0-1127.el7.x86_64                      224/272 
+  Cleanup    : ppp-2.4.5-33.el7.x86_64                                  225/272 
+  Cleanup    : python-libipa_hbac-1.16.4-37.el7.x86_64                  226/272 
+  Cleanup    : 1:java-1.8.0-openjdk-1.8.0.242.b08-1.el7.x86_64          227/272 
+  Cleanup    : 1:java-1.8.0-openjdk-headless-1.8.0.242.b08-1.el7.x86_   228/272 
+  Cleanup    : freerdp-libs-2.0.0-1.rc4.el7.x86_64                      229/272 
+  Cleanup    : libwinpr-2.0.0-1.rc4.el7.x86_64                          230/272 
+  Cleanup    : unbound-libs-1.6.6-3.el7.x86_64                          231/272 
+  Cleanup    : 1:dbus-1.10.24-13.el7_6.x86_64                           232/272 
+  Cleanup    : systemd-219-73.el7.1.x86_64                              233/272 
+  Cleanup    : 1:dbus-libs-1.10.24-13.el7_6.x86_64                      234/272 
+  Cleanup    : mesa-libGL-18.3.4-7.el7.x86_64                           235/272 
+  Cleanup    : ca-certificates-2019.2.32-76.el7_7.noarch                236/272 
+  Cleanup    : tzdata-java-2019c-1.el7.noarch                           237/272 
+  Cleanup    : 32:bind-license-9.11.4-16.P2.el7.noarch                  238/272 
+  Cleanup    : 1:grub2-common-2.02-0.81.el7.centos.noarch               239/272 
+  Cleanup    : selinux-policy-3.13.1-266.el7.noarch                     240/272 
+  Cleanup    : mesa-filesystem-18.3.4-7.el7.x86_64                      241/272 
+  Cleanup    : firewalld-filesystem-0.6.3-8.el7.noarch                  242/272 
+  Cleanup    : python-firewall-0.6.3-8.el7.noarch                       243/272 
+  Cleanup    : python-sssdconfig-1.16.4-37.el7.noarch                   244/272 
+  Cleanup    : kernel-headers-3.10.0-1127.el7.x86_64                    245/272 
+  Cleanup    : yum-plugin-fastestmirror-1.1.31-53.el7.noarch            246/272 
+  Cleanup    : tzdata-2019c-1.el7.noarch                                247/272 
+  Cleanup    : sos-3.8-6.el7.centos.noarch                              248/272 
+  Cleanup    : mesa-libglapi-18.3.4-7.el7.x86_64                        249/272 
+  Cleanup    : systemd-libs-219-73.el7.1.x86_64                         250/272 
+  Cleanup    : libipa_hbac-1.16.4-37.el7.x86_64                         251/272 
+  Cleanup    : kernel-tools-libs-3.10.0-1127.el7.x86_64                 252/272 
+  Cleanup    : mokutil-15-2.el7.centos.x86_64                           253/272 
+  Cleanup    : libsss_idmap-1.16.4-37.el7.x86_64                        254/272 
+  Cleanup    : libsss_nss_idmap-1.16.4-37.el7.x86_64                    255/272 
+  Cleanup    : libicu-50.2-3.el7.x86_64                                 256/272 
+  Cleanup    : http-parser-2.7.1-8.el7.x86_64                           257/272 
+  Cleanup    : libsss_autofs-1.16.4-37.el7.x86_64                       258/272 
+  Cleanup    : libsss_certmap-1.16.4-37.el7.x86_64                      259/272 
+  Cleanup    : libsss_sudo-1.16.4-37.el7.x86_64                         260/272 
+  Cleanup    : 10:qemu-img-1.5.3-173.el7.x86_64                         261/272 
+  Cleanup    : bpftool-3.10.0-1127.el7.x86_64                           262/272 
+  Cleanup    : libexif-0.6.21-6.el7.x86_64                              263/272 
+  Cleanup    : ncompress-4.2.4.4-3.el7.x86_64                           264/272 
+  Cleanup    : python-sss-murmur-1.16.4-37.el7.x86_64                   265/272 
+  Cleanup    : 1:net-snmp-libs-5.7.2-47.el7.x86_64                      266/272 
+  Cleanup    : mesa-libxatracker-18.3.4-7.el7.x86_64                    267/272 
+  Cleanup    : iprutils-2.4.17.1-3.el7.x86_64                           268/272 
+  Cleanup    : augeas-libs-1.4.0-9.el7.x86_64                           269/272 
+  Cleanup    : binutils-2.27-43.base.el7.x86_64                         270/272 
+  Cleanup    : 32:bind-export-libs-9.11.4-16.P2.el7.x86_64              271/272 
+  Cleanup    : python-perf-3.10.0-1127.el7.x86_64                       272/272 
+  Verifying  : 1:dbus-x11-1.10.24-14.el7_8.x86_64                         1/272 
+  Verifying  : mesa-libGL-18.3.4-7.el7_8.1.x86_64                         2/272 
+  Verifying  : libvirt-daemon-driver-storage-core-4.5.0-33.el7_8.1.x8     3/272 
+  Verifying  : kernel-tools-libs-3.10.0-1127.18.2.el7.x86_64              4/272 
+  Verifying  : flatpak-1.0.9-9.el7_7.x86_64                               5/272 
+  Verifying  : git-1.8.3.1-23.el7_8.x86_64                                6/272 
+  Verifying  : shim-x64-15-8.el7.x86_64                                   7/272 
+  Verifying  : libvirt-daemon-driver-network-4.5.0-33.el7_8.1.x86_64      8/272 
+  Verifying  : 1:dbus-1.10.24-14.el7_8.x86_64                             9/272 
+  Verifying  : sos-3.8-8.el7.centos.noarch                               10/272 
+  Verifying  : python-perf-3.10.0-1127.18.2.el7.x86_64                   11/272 
+  Verifying  : http-parser-2.7.1-8.el7_7.2.x86_64                        12/272 
+  Verifying  : libsss_autofs-1.16.4-37.el7_8.3.x86_64                    13/272 
+  Verifying  : libvirt-daemon-driver-storage-rbd-4.5.0-33.el7_8.1.x86    14/272 
+  Verifying  : sssd-ipa-1.16.4-37.el7_8.3.x86_64                         15/272 
+  Verifying  : libvirt-daemon-driver-storage-logical-4.5.0-33.el7_8.1    16/272 
+  Verifying  : sssd-common-1.16.4-37.el7_8.3.x86_64                      17/272 
+  Verifying  : samba-client-libs-4.10.4-11.el7_8.x86_64                  18/272 
+  Verifying  : 32:bind-export-libs-9.11.4-16.P2.el7_8.6.x86_64           19/272 
+  Verifying  : mokutil-15-8.el7.x86_64                                   20/272 
+  Verifying  : 1:grub2-tools-2.02-0.86.el7.centos.x86_64                 21/272 
+  Verifying  : ntpdate-4.2.6p5-29.el7.centos.2.x86_64                    22/272 
+  Verifying  : 1:grub2-common-2.02-0.86.el7.centos.noarch                23/272 
+  Verifying  : sssd-ad-1.16.4-37.el7_8.3.x86_64                          24/272 
+  Verifying  : ca-certificates-2020.2.41-70.0.el7_8.noarch               25/272 
+  Verifying  : 32:bind-utils-9.11.4-16.P2.el7_8.6.x86_64                 26/272 
+  Verifying  : ntp-4.2.6p5-29.el7.centos.2.x86_64                        27/272 
+  Verifying  : kernel-3.10.0-1127.18.2.el7.x86_64                        28/272 
+  Verifying  : binutils-2.27-43.base.el7_8.1.x86_64                      29/272 
+  Verifying  : augeas-libs-1.4.0-9.el7_8.1.x86_64                        30/272 
+  Verifying  : firefox-68.10.0-1.el7.centos.x86_64                       31/272 
+  Verifying  : 32:bind-libs-9.11.4-16.P2.el7_8.6.x86_64                  32/272 
+  Verifying  : 1:grub2-2.02-0.86.el7.centos.x86_64                       33/272 
+  Verifying  : libvirt-daemon-driver-qemu-4.5.0-33.el7_8.1.x86_64        34/272 
+  Verifying  : sssd-proxy-1.16.4-37.el7_8.3.x86_64                       35/272 
+  Verifying  : mutter-3.28.3-22.el7_8.x86_64                             36/272 
+  Verifying  : selinux-policy-3.13.1-266.el7_8.1.noarch                  37/272 
+  Verifying  : 1:java-1.8.0-openjdk-headless-1.8.0.252.b09-2.el7_8.x8    38/272 
+  Verifying  : rsyslog-8.24.0-52.el7_8.2.x86_64                          39/272 
+  Verifying  : 32:bind-libs-lite-9.11.4-16.P2.el7_8.6.x86_64             40/272 
+  Verifying  : libicu-50.2-4.el7_7.x86_64                                41/272 
+  Verifying  : 10:qemu-img-1.5.3-173.el7_8.3.x86_64                      42/272 
+  Verifying  : libvirt-daemon-driver-storage-scsi-4.5.0-33.el7_8.1.x8    43/272 
+  Verifying  : libvirt-daemon-driver-storage-disk-4.5.0-33.el7_8.1.x8    44/272 
+  Verifying  : fwupdate-efi-12-6.el7.centos.x86_64                       45/272 
+  Verifying  : firewalld-0.6.3-8.el7_8.1.noarch                          46/272 
+  Verifying  : libgudev1-219-73.el7_8.8.x86_64                           47/272 
+  Verifying  : iprutils-2.4.17.1-3.el7_7.x86_64                          48/272 
+  Verifying  : sssd-client-1.16.4-37.el7_8.3.x86_64                      49/272 
+  Verifying  : 7:device-mapper-libs-1.02.164-7.el7_8.2.x86_64            50/272 
+  Verifying  : 10:qemu-kvm-common-1.5.3-173.el7_8.3.x86_64               51/272 
+  Verifying  : mesa-libxatracker-18.3.4-7.el7_8.1.x86_64                 52/272 
+  Verifying  : tzdata-2020a-1.el7.noarch                                 53/272 
+  Verifying  : xorg-x11-drv-ati-19.0.1-3.el7_7.x86_64                    54/272 
+  Verifying  : libvirt-daemon-config-network-4.5.0-33.el7_8.1.x86_64     55/272 
+  Verifying  : libsss_certmap-1.16.4-37.el7_8.3.x86_64                   56/272 
+  Verifying  : 1:grub2-pc-2.02-0.86.el7.centos.x86_64                    57/272 
+  Verifying  : unbound-libs-1.6.6-5.el7_8.x86_64                         58/272 
+  Verifying  : selinux-policy-targeted-3.13.1-266.el7_8.1.noarch         59/272 
+  Verifying  : firewalld-filesystem-0.6.3-8.el7_8.1.noarch               60/272 
+  Verifying  : 1:java-1.7.0-openjdk-headless-1.7.0.261-2.6.22.2.el7_8    61/272 
+  Verifying  : 1:java-1.7.0-openjdk-1.7.0.261-2.6.22.2.el7_8.x86_64      62/272 
+  Verifying  : samba-common-libs-4.10.4-11.el7_8.x86_64                  63/272 
+  Verifying  : systemd-libs-219-73.el7_8.8.x86_64                        64/272 
+  Verifying  : sssd-krb5-1.16.4-37.el7_8.3.x86_64                        65/272 
+  Verifying  : open-vm-tools-desktop-10.3.10-2.el7_8.1.x86_64            66/272 
+  Verifying  : libvirt-daemon-kvm-4.5.0-33.el7_8.1.x86_64                67/272 
+  Verifying  : tzdata-java-2020a-1.el7.noarch                            68/272 
+  Verifying  : freerdp-libs-2.0.0-4.rc4.el7_8.x86_64                     69/272 
+  Verifying  : 7:lvm2-2.02.186-7.el7_8.2.x86_64                          70/272 
+  Verifying  : yum-plugin-fastestmirror-1.1.31-54.el7_8.noarch           71/272 
+  Verifying  : mesa-dri-drivers-18.3.4-7.el7_8.1.x86_64                  72/272 
+  Verifying  : 7:device-mapper-1.02.164-7.el7_8.2.x86_64                 73/272 
+  Verifying  : python-sssdconfig-1.16.4-37.el7_8.3.noarch                74/272 
+  Verifying  : libvirt-daemon-driver-storage-gluster-4.5.0-33.el7_8.1    75/272 
+  Verifying  : libvirt-daemon-driver-storage-4.5.0-33.el7_8.1.x86_64     76/272 
+  Verifying  : open-vm-tools-10.3.10-2.el7_8.1.x86_64                    77/272 
+  Verifying  : libsmbclient-4.10.4-11.el7_8.x86_64                       78/272 
+  Verifying  : libsss_nss_idmap-1.16.4-37.el7_8.3.x86_64                 79/272 
+  Verifying  : libipa_hbac-1.16.4-37.el7_8.3.x86_64                      80/272 
+  Verifying  : 1:java-1.8.0-openjdk-1.8.0.252.b09-2.el7_8.x86_64         81/272 
+  Verifying  : 1:dbus-libs-1.10.24-14.el7_8.x86_64                       82/272 
+  Verifying  : librdmacm-22.4-2.el7_8.x86_64                             83/272 
+  Verifying  : 1:net-snmp-libs-5.7.2-48.el7_8.1.x86_64                   84/272 
+  Verifying  : 7:device-mapper-event-1.02.164-7.el7_8.2.x86_64           85/272 
+  Verifying  : sssd-krb5-common-1.16.4-37.el7_8.3.x86_64                 86/272 
+  Verifying  : libvirt-daemon-driver-nodedev-4.5.0-33.el7_8.1.x86_64     87/272 
+  Verifying  : python-sss-murmur-1.16.4-37.el7_8.3.x86_64                88/272 
+  Verifying  : sssd-common-pac-1.16.4-37.el7_8.3.x86_64                  89/272 
+  Verifying  : 2:microcode_ctl-2.1-61.10.el7_8.x86_64                    90/272 
+  Verifying  : samba-common-4.10.4-11.el7_8.noarch                       91/272 
+  Verifying  : firewall-config-0.6.3-8.el7_8.1.noarch                    92/272 
+  Verifying  : libsss_idmap-1.16.4-37.el7_8.3.x86_64                     93/272 
+  Verifying  : python-firewall-0.6.3-8.el7_8.1.noarch                    94/272 
+  Verifying  : samba-client-4.10.4-11.el7_8.x86_64                       95/272 
+  Verifying  : python-libipa_hbac-1.16.4-37.el7_8.3.x86_64               96/272 
+  Verifying  : libwinpr-2.0.0-4.rc4.el7_8.x86_64                         97/272 
+  Verifying  : libvirt-daemon-driver-nwfilter-4.5.0-33.el7_8.1.x86_64    98/272 
+  Verifying  : 32:bind-license-9.11.4-16.P2.el7_8.6.noarch               99/272 
+  Verifying  : rdma-core-22.4-2.el7_8.x86_64                            100/272 
+  Verifying  : ncompress-4.2.4.4-3.1.el7_8.x86_64                       101/272 
+  Verifying  : mesa-libgbm-18.3.4-7.el7_8.1.x86_64                      102/272 
+  Verifying  : sssd-ldap-1.16.4-37.el7_8.3.x86_64                       103/272 
+  Verifying  : 1:grub2-pc-modules-2.02-0.86.el7.centos.noarch           104/272 
+  Verifying  : libexif-0.6.21-7.el7_8.x86_64                            105/272 
+  Verifying  : bpftool-3.10.0-1127.18.2.el7.x86_64                      106/272 
+  Verifying  : libvirt-daemon-driver-secret-4.5.0-33.el7_8.1.x86_64     107/272 
+  Verifying  : kernel-headers-3.10.0-1127.18.2.el7.x86_64               108/272 
+  Verifying  : mesa-libEGL-18.3.4-7.el7_8.1.x86_64                      109/272 
+  Verifying  : kernel-devel-3.10.0-1127.18.2.el7.x86_64                 110/272 
+  Verifying  : libibverbs-22.4-2.el7_8.x86_64                           111/272 
+  Verifying  : systemd-219-73.el7_8.8.x86_64                            112/272 
+  Verifying  : mesa-filesystem-18.3.4-7.el7_8.1.x86_64                  113/272 
+  Verifying  : flatpak-libs-1.0.9-9.el7_7.x86_64                        114/272 
+  Verifying  : systemd-python-219-73.el7_8.8.x86_64                     115/272 
+  Verifying  : systemd-sysv-219-73.el7_8.8.x86_64                       116/272 
+  Verifying  : perl-Git-1.8.3.1-23.el7_8.noarch                         117/272 
+  Verifying  : libvirt-daemon-driver-storage-iscsi-4.5.0-33.el7_8.1.x   118/272 
+  Verifying  : mesa-libglapi-18.3.4-7.el7_8.1.x86_64                    119/272 
+  Verifying  : libvirt-libs-4.5.0-33.el7_8.1.x86_64                     120/272 
+  Verifying  : ppp-2.4.5-34.el7_7.x86_64                                121/272 
+  Verifying  : samba-libs-4.10.4-11.el7_8.x86_64                        122/272 
+  Verifying  : 7:lvm2-libs-2.02.186-7.el7_8.2.x86_64                    123/272 
+  Verifying  : 1:grub2-tools-minimal-2.02-0.86.el7.centos.x86_64        124/272 
+  Verifying  : kernel-tools-3.10.0-1127.18.2.el7.x86_64                 125/272 
+  Verifying  : libvirt-daemon-4.5.0-33.el7_8.1.x86_64                   126/272 
+  Verifying  : 10:qemu-kvm-1.5.3-173.el7_8.3.x86_64                     127/272 
+  Verifying  : libwvstreams-4.6.1-12.el7_8.x86_64                       128/272 
+  Verifying  : 1:grub2-tools-extra-2.02-0.86.el7.centos.x86_64          129/272 
+  Verifying  : libwbclient-4.10.4-11.el7_8.x86_64                       130/272 
+  Verifying  : fwupdate-libs-12-6.el7.centos.x86_64                     131/272 
+  Verifying  : libsss_sudo-1.16.4-37.el7_8.3.x86_64                     132/272 
+  Verifying  : sssd-1.16.4-37.el7_8.3.x86_64                            133/272 
+  Verifying  : python-requests-2.6.0-9.el7_8.noarch                     134/272 
+  Verifying  : libvirt-daemon-driver-interface-4.5.0-33.el7_8.1.x86_6   135/272 
+  Verifying  : 7:device-mapper-event-libs-1.02.164-7.el7_8.2.x86_64     136/272 
+  Verifying  : libvirt-daemon-driver-storage-mpath-4.5.0-33.el7_8.1.x   137/272 
+  Verifying  : tzdata-2019c-1.el7.noarch                                138/272 
+  Verifying  : sssd-krb5-common-1.16.4-37.el7.x86_64                    139/272 
+  Verifying  : ppp-2.4.5-33.el7.x86_64                                  140/272 
+  Verifying  : libsmbclient-4.10.4-10.el7.x86_64                        141/272 
+  Verifying  : perl-Git-1.8.3.1-21.el7_7.noarch                         142/272 
+  Verifying  : firewalld-0.6.3-8.el7.noarch                             143/272 
+  Verifying  : libvirt-daemon-driver-storage-4.5.0-33.el7.x86_64        144/272 
+  Verifying  : libvirt-daemon-driver-qemu-4.5.0-33.el7.x86_64           145/272 
+  Verifying  : shim-x64-15-2.el7.centos.x86_64                          146/272 
+  Verifying  : firefox-68.5.0-2.el7.centos.x86_64                       147/272 
+  Verifying  : libvirt-daemon-driver-secret-4.5.0-33.el7.x86_64         148/272 
+  Verifying  : libsss_idmap-1.16.4-37.el7.x86_64                        149/272 
+  Verifying  : sssd-1.16.4-37.el7.x86_64                                150/272 
+  Verifying  : mutter-3.28.3-20.el7.x86_64                              151/272 
+  Verifying  : 1:grub2-tools-2.02-0.81.el7.centos.x86_64                152/272 
+  Verifying  : mesa-libgbm-18.3.4-7.el7.x86_64                          153/272 
+  Verifying  : libsss_autofs-1.16.4-37.el7.x86_64                       154/272 
+  Verifying  : mesa-libglapi-18.3.4-7.el7.x86_64                        155/272 
+  Verifying  : ca-certificates-2019.2.32-76.el7_7.noarch                156/272 
+  Verifying  : firewalld-filesystem-0.6.3-8.el7.noarch                  157/272 
+  Verifying  : libvirt-daemon-driver-storage-rbd-4.5.0-33.el7.x86_64    158/272 
+  Verifying  : libwvstreams-4.6.1-11.el7.x86_64                         159/272 
+  Verifying  : sssd-proxy-1.16.4-37.el7.x86_64                          160/272 
+  Verifying  : libvirt-daemon-driver-interface-4.5.0-33.el7.x86_64      161/272 
+  Verifying  : sssd-ad-1.16.4-37.el7.x86_64                             162/272 
+  Verifying  : flatpak-1.0.9-8.el7_7.x86_64                             163/272 
+  Verifying  : selinux-policy-3.13.1-266.el7.noarch                     164/272 
+  Verifying  : libvirt-daemon-driver-storage-mpath-4.5.0-33.el7.x86_6   165/272 
+  Verifying  : samba-client-4.10.4-10.el7.x86_64                        166/272 
+  Verifying  : fwupdate-libs-12-5.el7.centos.x86_64                     167/272 
+  Verifying  : 32:bind-license-9.11.4-16.P2.el7.noarch                  168/272 
+  Verifying  : kernel-tools-libs-3.10.0-1127.el7.x86_64                 169/272 
+  Verifying  : 10:qemu-kvm-common-1.5.3-173.el7.x86_64                  170/272 
+  Verifying  : libvirt-libs-4.5.0-33.el7.x86_64                         171/272 
+  Verifying  : flatpak-libs-1.0.9-8.el7_7.x86_64                        172/272 
+  Verifying  : firewall-config-0.6.3-8.el7.noarch                       173/272 
+  Verifying  : unbound-libs-1.6.6-3.el7.x86_64                          174/272 
+  Verifying  : python-requests-2.6.0-8.el7_7.noarch                     175/272 
+  Verifying  : python-perf-3.10.0-1127.el7.x86_64                       176/272 
+  Verifying  : 1:java-1.8.0-openjdk-1.8.0.242.b08-1.el7.x86_64          177/272 
+  Verifying  : libvirt-daemon-driver-network-4.5.0-33.el7.x86_64        178/272 
+  Verifying  : 1:grub2-tools-extra-2.02-0.81.el7.centos.x86_64          179/272 
+  Verifying  : sos-3.8-6.el7.centos.noarch                              180/272 
+  Verifying  : 1:grub2-tools-minimal-2.02-0.81.el7.centos.x86_64        181/272 
+  Verifying  : samba-common-4.10.4-10.el7.noarch                        182/272 
+  Verifying  : ntp-4.2.6p5-29.el7.centos.x86_64                         183/272 
+  Verifying  : mesa-libxatracker-18.3.4-7.el7.x86_64                    184/272 
+  Verifying  : 1:java-1.8.0-openjdk-headless-1.8.0.242.b08-1.el7.x86_   185/272 
+  Verifying  : libexif-0.6.21-6.el7.x86_64                              186/272 
+  Verifying  : 32:bind-utils-9.11.4-16.P2.el7.x86_64                    187/272 
+  Verifying  : libwbclient-4.10.4-10.el7.x86_64                         188/272 
+  Verifying  : python-sss-murmur-1.16.4-37.el7.x86_64                   189/272 
+  Verifying  : 7:lvm2-2.02.186-7.el7.x86_64                             190/272 
+  Verifying  : open-vm-tools-10.3.10-2.el7.x86_64                       191/272 
+  Verifying  : systemd-libs-219-73.el7.1.x86_64                         192/272 
+  Verifying  : samba-common-libs-4.10.4-10.el7.x86_64                   193/272 
+  Verifying  : ncompress-4.2.4.4-3.el7.x86_64                           194/272 
+  Verifying  : libsss_certmap-1.16.4-37.el7.x86_64                      195/272 
+  Verifying  : 2:microcode_ctl-2.1-61.el7.x86_64                        196/272 
+  Verifying  : libvirt-daemon-driver-nodedev-4.5.0-33.el7.x86_64        197/272 
+  Verifying  : python-libipa_hbac-1.16.4-37.el7.x86_64                  198/272 
+  Verifying  : freerdp-libs-2.0.0-1.rc4.el7.x86_64                      199/272 
+  Verifying  : augeas-libs-1.4.0-9.el7.x86_64                           200/272 
+  Verifying  : python-sssdconfig-1.16.4-37.el7.noarch                   201/272 
+  Verifying  : 7:device-mapper-event-1.02.164-7.el7.x86_64              202/272 
+  Verifying  : sssd-krb5-1.16.4-37.el7.x86_64                           203/272 
+  Verifying  : 1:grub2-pc-modules-2.02-0.81.el7.centos.noarch           204/272 
+  Verifying  : selinux-policy-targeted-3.13.1-266.el7.noarch            205/272 
+  Verifying  : iprutils-2.4.17.1-3.el7.x86_64                           206/272 
+  Verifying  : libicu-50.2-3.el7.x86_64                                 207/272 
+  Verifying  : 1:net-snmp-libs-5.7.2-47.el7.x86_64                      208/272 
+  Verifying  : librdmacm-22.4-1.el7.x86_64                              209/272 
+  Verifying  : mesa-filesystem-18.3.4-7.el7.x86_64                      210/272 
+  Verifying  : sssd-ipa-1.16.4-37.el7.x86_64                            211/272 
+  Verifying  : samba-libs-4.10.4-10.el7.x86_64                          212/272 
+  Verifying  : rdma-core-22.4-1.el7.x86_64                              213/272 
+  Verifying  : sssd-client-1.16.4-37.el7.x86_64                         214/272 
+  Verifying  : rsyslog-8.24.0-52.el7.x86_64                             215/272 
+  Verifying  : libsss_sudo-1.16.4-37.el7.x86_64                         216/272 
+  Verifying  : systemd-python-219-73.el7.1.x86_64                       217/272 
+  Verifying  : libvirt-daemon-driver-storage-scsi-4.5.0-33.el7.x86_64   218/272 
+  Verifying  : libvirt-daemon-driver-storage-disk-4.5.0-33.el7.x86_64   219/272 
+  Verifying  : 10:qemu-img-1.5.3-173.el7.x86_64                         220/272 
+  Verifying  : 1:dbus-x11-1.10.24-13.el7_6.x86_64                       221/272 
+  Verifying  : libvirt-daemon-kvm-4.5.0-33.el7.x86_64                   222/272 
+  Verifying  : libipa_hbac-1.16.4-37.el7.x86_64                         223/272 
+  Verifying  : sssd-common-pac-1.16.4-37.el7.x86_64                     224/272 
+  Verifying  : open-vm-tools-desktop-10.3.10-2.el7.x86_64               225/272 
+  Verifying  : tzdata-java-2019c-1.el7.noarch                           226/272 
+  Verifying  : kernel-headers-3.10.0-1127.el7.x86_64                    227/272 
+  Verifying  : 1:grub2-common-2.02-0.81.el7.centos.noarch               228/272 
+  Verifying  : fwupdate-efi-12-5.el7.centos.x86_64                      229/272 
+  Verifying  : python-firewall-0.6.3-8.el7.noarch                       230/272 
+  Verifying  : 7:device-mapper-1.02.164-7.el7.x86_64                    231/272 
+  Verifying  : mesa-libGL-18.3.4-7.el7.x86_64                           232/272 
+  Verifying  : 1:java-1.7.0-openjdk-1.7.0.251-2.6.21.1.el7.x86_64       233/272 
+  Verifying  : 1:dbus-libs-1.10.24-13.el7_6.x86_64                      234/272 
+  Verifying  : libvirt-daemon-driver-storage-iscsi-4.5.0-33.el7.x86_6   235/272 
+  Verifying  : 1:dbus-1.10.24-13.el7_6.x86_64                           236/272 
+  Verifying  : libvirt-daemon-4.5.0-33.el7.x86_64                       237/272 
+  Verifying  : 1:grub2-pc-2.02-0.81.el7.centos.x86_64                   238/272 
+  Verifying  : http-parser-2.7.1-8.el7.x86_64                           239/272 
+  Verifying  : mokutil-15-2.el7.centos.x86_64                           240/272 
+  Verifying  : 32:bind-libs-9.11.4-16.P2.el7.x86_64                     241/272 
+  Verifying  : samba-client-libs-4.10.4-10.el7.x86_64                   242/272 
+  Verifying  : mesa-libEGL-18.3.4-7.el7.x86_64                          243/272 
+  Verifying  : libvirt-daemon-driver-storage-gluster-4.5.0-33.el7.x86   244/272 
+  Verifying  : libwinpr-2.0.0-1.rc4.el7.x86_64                          245/272 
+  Verifying  : git-1.8.3.1-21.el7_7.x86_64                              246/272 
+  Verifying  : yum-plugin-fastestmirror-1.1.31-53.el7.noarch            247/272 
+  Verifying  : systemd-219-73.el7.1.x86_64                              248/272 
+  Verifying  : 1:grub2-2.02-0.81.el7.centos.x86_64                      249/272 
+  Verifying  : xorg-x11-drv-ati-19.0.1-3.el7.x86_64                     250/272 
+  Verifying  : bpftool-3.10.0-1127.el7.x86_64                           251/272 
+  Verifying  : 7:device-mapper-libs-1.02.164-7.el7.x86_64               252/272 
+  Verifying  : 32:bind-export-libs-9.11.4-16.P2.el7.x86_64              253/272 
+  Verifying  : 7:device-mapper-event-libs-1.02.164-7.el7.x86_64         254/272 
+  Verifying  : libgudev1-219-73.el7.1.x86_64                            255/272 
+  Verifying  : 1:java-1.7.0-openjdk-headless-1.7.0.251-2.6.21.1.el7.x   256/272 
+  Verifying  : libibverbs-22.4-1.el7.x86_64                             257/272 
+  Verifying  : systemd-sysv-219-73.el7.1.x86_64                         258/272 
+  Verifying  : sssd-common-1.16.4-37.el7.x86_64                         259/272 
+  Verifying  : ntpdate-4.2.6p5-29.el7.centos.x86_64                     260/272 
+  Verifying  : libvirt-daemon-driver-storage-core-4.5.0-33.el7.x86_64   261/272 
+  Verifying  : libvirt-daemon-config-network-4.5.0-33.el7.x86_64        262/272 
+  Verifying  : 10:qemu-kvm-1.5.3-173.el7.x86_64                         263/272 
+  Verifying  : binutils-2.27-43.base.el7.x86_64                         264/272 
+  Verifying  : sssd-ldap-1.16.4-37.el7.x86_64                           265/272 
+  Verifying  : kernel-tools-3.10.0-1127.el7.x86_64                      266/272 
+  Verifying  : 7:lvm2-libs-2.02.186-7.el7.x86_64                        267/272 
+  Verifying  : mesa-dri-drivers-18.3.4-7.el7.x86_64                     268/272 
+  Verifying  : libsss_nss_idmap-1.16.4-37.el7.x86_64                    269/272 
+  Verifying  : libvirt-daemon-driver-nwfilter-4.5.0-33.el7.x86_64       270/272 
+  Verifying  : 32:bind-libs-lite-9.11.4-16.P2.el7.x86_64                271/272 
+  Verifying  : libvirt-daemon-driver-storage-logical-4.5.0-33.el7.x86   272/272 
+
+Installed:
+  kernel.x86_64 0:3.10.0-1127.18.2.el7                                          
+  kernel-devel.x86_64 0:3.10.0-1127.18.2.el7                                    
+
+Updated:
+  augeas-libs.x86_64 0:1.4.0-9.el7_8.1                                          
+  bind-export-libs.x86_64 32:9.11.4-16.P2.el7_8.6                               
+  bind-libs.x86_64 32:9.11.4-16.P2.el7_8.6                                      
+  bind-libs-lite.x86_64 32:9.11.4-16.P2.el7_8.6                                 
+  bind-license.noarch 32:9.11.4-16.P2.el7_8.6                                   
+  bind-utils.x86_64 32:9.11.4-16.P2.el7_8.6                                     
+  binutils.x86_64 0:2.27-43.base.el7_8.1                                        
+  bpftool.x86_64 0:3.10.0-1127.18.2.el7                                         
+  ca-certificates.noarch 0:2020.2.41-70.0.el7_8                                 
+  dbus.x86_64 1:1.10.24-14.el7_8                                                
+  dbus-libs.x86_64 1:1.10.24-14.el7_8                                           
+  dbus-x11.x86_64 1:1.10.24-14.el7_8                                            
+  device-mapper.x86_64 7:1.02.164-7.el7_8.2                                     
+  device-mapper-event.x86_64 7:1.02.164-7.el7_8.2                               
+  device-mapper-event-libs.x86_64 7:1.02.164-7.el7_8.2                          
+  device-mapper-libs.x86_64 7:1.02.164-7.el7_8.2                                
+  firefox.x86_64 0:68.10.0-1.el7.centos                                         
+  firewall-config.noarch 0:0.6.3-8.el7_8.1                                      
+  firewalld.noarch 0:0.6.3-8.el7_8.1                                            
+  firewalld-filesystem.noarch 0:0.6.3-8.el7_8.1                                 
+  flatpak.x86_64 0:1.0.9-9.el7_7                                                
+  flatpak-libs.x86_64 0:1.0.9-9.el7_7                                           
+  freerdp-libs.x86_64 0:2.0.0-4.rc4.el7_8                                       
+  fwupdate-efi.x86_64 0:12-6.el7.centos                                         
+  fwupdate-libs.x86_64 0:12-6.el7.centos                                        
+  git.x86_64 0:1.8.3.1-23.el7_8                                                 
+  grub2.x86_64 1:2.02-0.86.el7.centos                                           
+  grub2-common.noarch 1:2.02-0.86.el7.centos                                    
+  grub2-pc.x86_64 1:2.02-0.86.el7.centos                                        
+  grub2-pc-modules.noarch 1:2.02-0.86.el7.centos                                
+  grub2-tools.x86_64 1:2.02-0.86.el7.centos                                     
+  grub2-tools-extra.x86_64 1:2.02-0.86.el7.centos                               
+  grub2-tools-minimal.x86_64 1:2.02-0.86.el7.centos                             
+  http-parser.x86_64 0:2.7.1-8.el7_7.2                                          
+  iprutils.x86_64 0:2.4.17.1-3.el7_7                                            
+  java-1.7.0-openjdk.x86_64 1:1.7.0.261-2.6.22.2.el7_8                          
+  java-1.7.0-openjdk-headless.x86_64 1:1.7.0.261-2.6.22.2.el7_8                 
+  java-1.8.0-openjdk.x86_64 1:1.8.0.252.b09-2.el7_8                             
+  java-1.8.0-openjdk-headless.x86_64 1:1.8.0.252.b09-2.el7_8                    
+  kernel-headers.x86_64 0:3.10.0-1127.18.2.el7                                  
+  kernel-tools.x86_64 0:3.10.0-1127.18.2.el7                                    
+  kernel-tools-libs.x86_64 0:3.10.0-1127.18.2.el7                               
+  libexif.x86_64 0:0.6.21-7.el7_8                                               
+  libgudev1.x86_64 0:219-73.el7_8.8                                             
+  libibverbs.x86_64 0:22.4-2.el7_8                                              
+  libicu.x86_64 0:50.2-4.el7_7                                                  
+  libipa_hbac.x86_64 0:1.16.4-37.el7_8.3                                        
+  librdmacm.x86_64 0:22.4-2.el7_8                                               
+  libsmbclient.x86_64 0:4.10.4-11.el7_8                                         
+  libsss_autofs.x86_64 0:1.16.4-37.el7_8.3                                      
+  libsss_certmap.x86_64 0:1.16.4-37.el7_8.3                                     
+  libsss_idmap.x86_64 0:1.16.4-37.el7_8.3                                       
+  libsss_nss_idmap.x86_64 0:1.16.4-37.el7_8.3                                   
+  libsss_sudo.x86_64 0:1.16.4-37.el7_8.3                                        
+  libvirt-daemon.x86_64 0:4.5.0-33.el7_8.1                                      
+  libvirt-daemon-config-network.x86_64 0:4.5.0-33.el7_8.1                       
+  libvirt-daemon-driver-interface.x86_64 0:4.5.0-33.el7_8.1                     
+  libvirt-daemon-driver-network.x86_64 0:4.5.0-33.el7_8.1                       
+  libvirt-daemon-driver-nodedev.x86_64 0:4.5.0-33.el7_8.1                       
+  libvirt-daemon-driver-nwfilter.x86_64 0:4.5.0-33.el7_8.1                      
+  libvirt-daemon-driver-qemu.x86_64 0:4.5.0-33.el7_8.1                          
+  libvirt-daemon-driver-secret.x86_64 0:4.5.0-33.el7_8.1                        
+  libvirt-daemon-driver-storage.x86_64 0:4.5.0-33.el7_8.1                       
+  libvirt-daemon-driver-storage-core.x86_64 0:4.5.0-33.el7_8.1                  
+  libvirt-daemon-driver-storage-disk.x86_64 0:4.5.0-33.el7_8.1                  
+  libvirt-daemon-driver-storage-gluster.x86_64 0:4.5.0-33.el7_8.1               
+  libvirt-daemon-driver-storage-iscsi.x86_64 0:4.5.0-33.el7_8.1                 
+  libvirt-daemon-driver-storage-logical.x86_64 0:4.5.0-33.el7_8.1               
+  libvirt-daemon-driver-storage-mpath.x86_64 0:4.5.0-33.el7_8.1                 
+  libvirt-daemon-driver-storage-rbd.x86_64 0:4.5.0-33.el7_8.1                   
+  libvirt-daemon-driver-storage-scsi.x86_64 0:4.5.0-33.el7_8.1                  
+  libvirt-daemon-kvm.x86_64 0:4.5.0-33.el7_8.1                                  
+  libvirt-libs.x86_64 0:4.5.0-33.el7_8.1                                        
+  libwbclient.x86_64 0:4.10.4-11.el7_8                                          
+  libwinpr.x86_64 0:2.0.0-4.rc4.el7_8                                           
+  libwvstreams.x86_64 0:4.6.1-12.el7_8                                          
+  lvm2.x86_64 7:2.02.186-7.el7_8.2                                              
+  lvm2-libs.x86_64 7:2.02.186-7.el7_8.2                                         
+  mesa-dri-drivers.x86_64 0:18.3.4-7.el7_8.1                                    
+  mesa-filesystem.x86_64 0:18.3.4-7.el7_8.1                                     
+  mesa-libEGL.x86_64 0:18.3.4-7.el7_8.1                                         
+  mesa-libGL.x86_64 0:18.3.4-7.el7_8.1                                          
+  mesa-libgbm.x86_64 0:18.3.4-7.el7_8.1                                         
+  mesa-libglapi.x86_64 0:18.3.4-7.el7_8.1                                       
+  mesa-libxatracker.x86_64 0:18.3.4-7.el7_8.1                                   
+  microcode_ctl.x86_64 2:2.1-61.10.el7_8                                        
+  mokutil.x86_64 0:15-8.el7                                                     
+  mutter.x86_64 0:3.28.3-22.el7_8                                               
+  ncompress.x86_64 0:4.2.4.4-3.1.el7_8                                          
+  net-snmp-libs.x86_64 1:5.7.2-48.el7_8.1                                       
+  ntp.x86_64 0:4.2.6p5-29.el7.centos.2                                          
+  ntpdate.x86_64 0:4.2.6p5-29.el7.centos.2                                      
+  open-vm-tools.x86_64 0:10.3.10-2.el7_8.1                                      
+  open-vm-tools-desktop.x86_64 0:10.3.10-2.el7_8.1                              
+  perl-Git.noarch 0:1.8.3.1-23.el7_8                                            
+  ppp.x86_64 0:2.4.5-34.el7_7                                                   
+  python-firewall.noarch 0:0.6.3-8.el7_8.1                                      
+  python-libipa_hbac.x86_64 0:1.16.4-37.el7_8.3                                 
+  python-perf.x86_64 0:3.10.0-1127.18.2.el7                                     
+  python-requests.noarch 0:2.6.0-9.el7_8                                        
+  python-sss-murmur.x86_64 0:1.16.4-37.el7_8.3                                  
+  python-sssdconfig.noarch 0:1.16.4-37.el7_8.3                                  
+  qemu-img.x86_64 10:1.5.3-173.el7_8.3                                          
+  qemu-kvm.x86_64 10:1.5.3-173.el7_8.3                                          
+  qemu-kvm-common.x86_64 10:1.5.3-173.el7_8.3                                   
+  rdma-core.x86_64 0:22.4-2.el7_8                                               
+  rsyslog.x86_64 0:8.24.0-52.el7_8.2                                            
+  samba-client.x86_64 0:4.10.4-11.el7_8                                         
+  samba-client-libs.x86_64 0:4.10.4-11.el7_8                                    
+  samba-common.noarch 0:4.10.4-11.el7_8                                         
+  samba-common-libs.x86_64 0:4.10.4-11.el7_8                                    
+  samba-libs.x86_64 0:4.10.4-11.el7_8                                           
+  selinux-policy.noarch 0:3.13.1-266.el7_8.1                                    
+  selinux-policy-targeted.noarch 0:3.13.1-266.el7_8.1                           
+  shim-x64.x86_64 0:15-8.el7                                                    
+  sos.noarch 0:3.8-8.el7.centos                                                 
+  sssd.x86_64 0:1.16.4-37.el7_8.3                                               
+  sssd-ad.x86_64 0:1.16.4-37.el7_8.3                                            
+  sssd-client.x86_64 0:1.16.4-37.el7_8.3                                        
+  sssd-common.x86_64 0:1.16.4-37.el7_8.3                                        
+  sssd-common-pac.x86_64 0:1.16.4-37.el7_8.3                                    
+  sssd-ipa.x86_64 0:1.16.4-37.el7_8.3                                           
+  sssd-krb5.x86_64 0:1.16.4-37.el7_8.3                                          
+  sssd-krb5-common.x86_64 0:1.16.4-37.el7_8.3                                   
+  sssd-ldap.x86_64 0:1.16.4-37.el7_8.3                                          
+  sssd-proxy.x86_64 0:1.16.4-37.el7_8.3                                         
+  systemd.x86_64 0:219-73.el7_8.8                                               
+  systemd-libs.x86_64 0:219-73.el7_8.8                                          
+  systemd-python.x86_64 0:219-73.el7_8.8                                        
+  systemd-sysv.x86_64 0:219-73.el7_8.8                                          
+  tzdata.noarch 0:2020a-1.el7                                                   
+  tzdata-java.noarch 0:2020a-1.el7                                              
+  unbound-libs.x86_64 0:1.6.6-5.el7_8                                           
+  xorg-x11-drv-ati.x86_64 0:19.0.1-3.el7_7                                      
+  yum-plugin-fastestmirror.noarch 0:1.1.31-54.el7_8                             
+
+Complete!
+[root@localhost script]# yum install git
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirror.tino.org
+ * extras: mirror.tino.org
+ * updates: mirror.tino.org
+Package git-1.8.3.1-23.el7_8.x86_64 already installed and latest version
+Nothing to do
+[root@localhost script]# mkdir -p /opt/docker_tutorial && cd /opt/docker_tutorial
+[root@localhost docker_tutorial]# git clone https://github.com/xuantu55/python.git
+Cloning into 'python'...
+remote: Enumerating objects: 33, done.
+remote: Counting objects: 100% (33/33), done.
+remote: Compressing objects: 100% (29/29), done.
+remote: Total 33 (delta 13), reused 2 (delta 1), pack-reused 0
+Unpacking objects: 100% (33/33), done.
+[root@localhost docker_tutorial]# docker-compose up -d
+ERROR: 
+        Can't find a suitable configuration file in this directory or any
+        parent. Are you in the right directory?
+
+        Supported filenames: docker-compose.yml, docker-compose.yaml
+        
+[root@localhost docker_tutorial]# ll -ls
+total 0
+0 drwxr-xr-x. 3 root root 118 Aug  4 17:54 python
+[root@localhost docker_tutorial]# ll
+total 0
+drwxr-xr-x. 3 root root 118 Aug  4 17:54 python
+[root@localhost docker_tutorial]# cd python/
+[root@localhost python]# ll -ls
+total 20
+4 -rw-r--r--. 1 root root 376 Aug  4 17:54 app.py
+4 -rw-r--r--. 1 root root 137 Aug  4 17:54 docker-compose.yaml
+4 -rw-r--r--. 1 root root 110 Aug  4 17:54 Dockerfile
+4 -rw-r--r--. 1 root root 886 Aug  4 17:54 README.md
+4 -rw-r--r--. 1 root root  12 Aug  4 17:54 requirements.txt
+[root@localhost python]# docker-compose up -d
+Creating network "python_default" with the default driver
+ERROR: Failed to Setup IP tables: Unable to enable SKIP DNAT rule:  (iptables failed: iptables --wait -t nat -I DOCKER -i br-f5d1b95b6eb6 -j RETURN: iptables: No chain/target/match by that name.
+ (exit status 1))
+[root@localhost python]# docker-compose ps
+Name   Command   State   Ports
+------------------------------
+[root@localhost python]# curl localhost:5000
+curl: (7) Failed connect to localhost:5000; Connection refused
+[root@localhost python]# docker inspect nginx
+[]
+Error: No such object: nginx
+[root@localhost python]# service iptables status
+Redirecting to /bin/systemctl status iptables.service
+Unit iptables.service could not be found.
+[root@localhost python]# service firewalld status
+Redirecting to /bin/systemctl status firewalld.service
+● firewalld.service
+   Loaded: masked (/dev/null; bad)
+   Active: inactive (dead) since Tue 2020-08-04 17:41:06 +07; 19min ago
+ Main PID: 693 (code=exited, status=0/SUCCESS)
+
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:41:04 localhost.localdomain systemd[1]: Stopping firewalld - dynamic ....
+Aug 04 17:41:06 localhost.localdomain systemd[1]: Stopped firewalld - dynamic f....
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@localhost python]# systemctl daemon-reload
+[root@localhost python]# service firewalld status
+Redirecting to /bin/systemctl status firewalld.service
+● firewalld.service
+   Loaded: masked (/dev/null; bad)
+   Active: inactive (dead) since Tue 2020-08-04 17:41:06 +07; 20min ago
+ Main PID: 693 (code=exited, status=0/SUCCESS)
+
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:41:04 localhost.localdomain systemd[1]: Stopping firewalld - dynamic ....
+Aug 04 17:41:06 localhost.localdomain systemd[1]: Stopped firewalld - dynamic f....
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@localhost python]# yum install iptables
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirror.tino.org
+ * extras: mirror.tino.org
+ * updates: mirror.tino.org
+Package iptables-1.4.21-34.el7.x86_64 already installed and latest version
+Nothing to do
+[root@localhost python]# sudo yum install iptables
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirror.tino.org
+ * extras: mirror.tino.org
+ * updates: mirror.tino.org
+Package iptables-1.4.21-34.el7.x86_64 already installed and latest version
+Nothing to do
+[root@localhost python]# yum update
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirror.tino.org
+ * extras: mirror.tino.org
+ * updates: mirror.tino.org
+No packages marked for update
+[root@localhost python]#  yum install iptables
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirror.tino.org
+ * extras: mirror.tino.org
+ * updates: mirror.tino.org
+Package iptables-1.4.21-34.el7.x86_64 already installed and latest version
+Nothing to do
+[root@localhost python]# yum update
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirror.tino.org
+ * extras: mirror.tino.org
+ * updates: mirror.tino.org
+No packages marked for update
+[root@localhost python]# service iptables status
+Redirecting to /bin/systemctl status iptables.service
+Unit iptables.service could not be found.
+[root@localhost python]# ^C
+[root@localhost python]# Package iptables-1.4.21-34.el7.x86_64 already installed and latest version
+bash: Package: command not found...
+[root@localhost python]# Package iptables-1.4.21-34.el7.x86_64 already installed and latest version
+bash: Package: command not found...
+[root@localhost python]# yum install iptables
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirror.tino.org
+ * extras: mirror.tino.org
+ * updates: mirror.tino.org
+Package iptables-1.4.21-34.el7.x86_64 already installed and latest version
+Nothing to do
+[root@localhost python]# install iptables
+install: missing destination file operand after ‘iptables’
+Try 'install --help' for more information.
+[root@localhost python]# yum install iptables-services
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirror.tino.org
+ * extras: mirror.tino.org
+ * updates: mirror.tino.org
+Resolving Dependencies
+--> Running transaction check
+---> Package iptables-services.x86_64 0:1.4.21-34.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+===================================================================================
+ Package                   Arch           Version               Repository    Size
+===================================================================================
+Installing:
+ iptables-services         x86_64         1.4.21-34.el7         base          52 k
+
+Transaction Summary
+===================================================================================
+Install  1 Package
+
+Total download size: 52 k
+Installed size: 23 k
+Is this ok [y/d/N]: y
+Downloading packages:
+iptables-services-1.4.21-34.el7.x86_64.rpm                  |  52 kB  00:00:00     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : iptables-services-1.4.21-34.el7.x86_64                          1/1 
+  Verifying  : iptables-services-1.4.21-34.el7.x86_64                          1/1 
+
+Installed:
+  iptables-services.x86_64 0:1.4.21-34.el7                                         
+
+Complete!
+[root@localhost python]# service iptables status
+Redirecting to /bin/systemctl status iptables.service
+● iptables.service - IPv4 firewall with iptables
+   Loaded: loaded (/usr/lib/systemd/system/iptables.service; disabled; vendor preset: disabled)
+   Active: inactive (dead)
+[root@localhost python]# systemctl enable iptables
+Created symlink from /etc/systemd/system/basic.target.wants/iptables.service to /usr/lib/systemd/system/iptables.service.
+[root@localhost python]# systemctl start iptables
+[root@localhost python]# systemctl status iptables
+● iptables.service - IPv4 firewall with iptables
+   Loaded: loaded (/usr/lib/systemd/system/iptables.service; enabled; vendor preset: disabled)
+   Active: active (exited) since Tue 2020-08-04 18:12:39 +07; 6s ago
+  Process: 53718 ExecStart=/usr/libexec/iptables/iptables.init start (code=exited, status=0/SUCCESS)
+ Main PID: 53718 (code=exited, status=0/SUCCESS)
+
+Aug 04 18:12:38 localhost.localdomain systemd[1]: Starting IPv4 firewall with i....
+Aug 04 18:12:39 localhost.localdomain iptables.init[53718]: iptables: Applying f...
+Aug 04 18:12:39 localhost.localdomain systemd[1]: Started IPv4 firewall with ip....
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@localhost python]# curl localhost:5000
+curl: (7) Failed connect to localhost:5000; Connection refused
+[root@localhost python]# iptables-save | grep 80
+:OUTPUT ACCEPT [198:12800]
+:POSTROUTING ACCEPT [198:12800]
+[root@localhost python]# iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
+[root@localhost python]# ip -4 a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    inet 192.168.139.140/24 brd 192.168.139.255 scope global noprefixroute dynamic ens33
+       valid_lft 1297sec preferred_lft 1297sec
+3: virbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
+    inet 192.168.122.1/24 brd 192.168.122.255 scope global virbr0
+       valid_lft forever preferred_lft forever
+5: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+6: br-f5d1b95b6eb6: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default 
+    inet 172.18.0.1/16 brd 172.18.255.255 scope global br-f5d1b95b6eb6
+       valid_lft forever preferred_lft forever
+[root@localhost python]# ^C
+[root@localhost python]# firewall-cmd --zone=public --add-port=80/tcp --permanent
+FirewallD is not running
+[root@localhost python]# systemctl start firewalld
+Failed to start firewalld.service: Unit is masked.
+[root@localhost python]# systemctl status firewalld
+● firewalld.service
+   Loaded: masked (/dev/null; bad)
+   Active: inactive (dead) since Tue 2020-08-04 17:41:06 +07; 36min ago
+ Main PID: 693 (code=exited, status=0/SUCCESS)
+
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:40:00 localhost.localdomain firewalld[693]: WARNING: COMMAND_FAILED: '...
+Aug 04 17:41:04 localhost.localdomain systemd[1]: Stopping firewalld - dynamic ....
+Aug 04 17:41:06 localhost.localdomain systemd[1]: Stopped firewalld - dynamic f....
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@localhost python]# systemctl enable firewalld
+Failed to execute operation: Cannot send after transport endpoint shutdown
+[root@localhost python]# systemctl start firewalld
+Failed to start firewalld.service: Unit is masked.
+[root@localhost python]# systemctl unmask --now firewalld
+Removed symlink /etc/systemd/system/firewalld.service.
+[root@localhost python]# systemctl enable firewalld
+Created symlink from /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service to /usr/lib/systemd/system/firewalld.service.
+Created symlink from /etc/systemd/system/multi-user.target.wants/firewalld.service to /usr/lib/systemd/system/firewalld.service.
+[root@localhost python]# systemctl start firewalld
+[root@localhost python]# systemctl status firewalld
+● firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+   Active: active (running) since Tue 2020-08-04 18:18:45 +07; 6s ago
+     Docs: man:firewalld(1)
+ Main PID: 54444 (firewalld)
+    Tasks: 2
+   Memory: 33.1M
+   CGroup: /system.slice/firewalld.service
+           └─54444 /usr/bin/python2 -Es /usr/sbin/firewalld --nofork --nopid
+
+Aug 04 18:18:45 localhost.localdomain systemd[1]: Starting firewalld - dynamic ....
+Aug 04 18:18:45 localhost.localdomain systemd[1]: Started firewalld - dynamic f....
+Aug 04 18:18:46 localhost.localdomain firewalld[54444]: WARNING: AllowZoneDrifti...
+Aug 04 18:18:47 localhost.localdomain firewalld[54444]: WARNING: COMMAND_FAILED:...
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@localhost python]# netstat -ntlp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      1298/master         
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      582/rpcbind         
+tcp        0      0 192.168.122.1:53        0.0.0.0:*               LISTEN      1411/dnsmasq        
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1057/sshd           
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      1059/cupsd          
+tcp6       0      0 ::1:25                  :::*                    LISTEN      1298/master         
+tcp6       0      0 :::111                  :::*                    LISTEN      582/rpcbind         
+tcp6       0      0 :::22                   :::*                    LISTEN      1057/sshd           
+tcp6       0      0 ::1:631                 :::*                    LISTEN      1059/cupsd          
+[root@localhost python]# curl 172.17.0.1
+curl: (7) Failed connect to 172.17.0.1:80; Connection refused
+[root@localhost python]# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+[root@localhost python]# docker-compose up -d
+Creating network "python_default" with the default driver
+Building web
+Step 1/5 : FROM python:3.4-alpine
+3.4-alpine: Pulling from library/python
+8e402f1a9c57: Pull complete
+cda9ba2397ef: Pull complete
+aafecf9bbbfd: Pull complete
+bc2e7e266629: Pull complete
+e1977129b756: Pull complete
+Digest: sha256:c210b660e2ea553a7afa23b41a6ed112f85dbce25cbcb567c75dfe05342a4c4b
+Status: Downloaded newer image for python:3.4-alpine
+ ---> c06adcf62f6e
+Step 2/5 : ADD . /code
+ ---> a9ee1dd790d7
+Step 3/5 : WORKDIR /code
+ ---> Running in 5f83d242dd38
+Removing intermediate container 5f83d242dd38
+ ---> 96da295f4484
+Step 4/5 : RUN pip install -r requirements.txt
+ ---> Running in b52cf7cba5e1
+DEPRECATION: Python 3.4 support has been deprecated. pip 19.1 will be the last one supporting it. Please upgrade your Python as Python 3.4 won't be maintained after March 2019 (cf PEP 429).
+Collecting flask (from -r requirements.txt (line 1))
+  Downloading https://files.pythonhosted.org/packages/d8/94/7350820ae209ccdba073f83220cea1c376f2621254d1e0e82609c9a65e58/Flask-1.0.4-py2.py3-none-any.whl (92kB)
+Collecting redis (from -r requirements.txt (line 2))
+  Downloading https://files.pythonhosted.org/packages/32/ae/28613a62eea0d53d3db3147f8715f90da07667e99baeedf1010eb400f8c0/redis-3.3.11-py2.py3-none-any.whl (66kB)
+Collecting Jinja2>=2.10 (from flask->-r requirements.txt (line 1))
+  Downloading https://files.pythonhosted.org/packages/65/e0/eb35e762802015cab1ccee04e8a277b03f1d8e53da3ec3106882ec42558b/Jinja2-2.10.3-py2.py3-none-any.whl (125kB)
+Collecting Werkzeug>=0.14 (from flask->-r requirements.txt (line 1))
+  Downloading https://files.pythonhosted.org/packages/c2/e4/a859d2fe516f466642fa5c6054fd9646271f9da26b0cac0d2f37fc858c8f/Werkzeug-0.16.1-py2.py3-none-any.whl (327kB)
+Collecting click>=5.1 (from flask->-r requirements.txt (line 1))
+  Downloading https://files.pythonhosted.org/packages/fa/37/45185cb5abbc30d7257104c434fe0b07e5a195a6847506c074527aa599ec/Click-7.0-py2.py3-none-any.whl (81kB)
+Collecting itsdangerous>=0.24 (from flask->-r requirements.txt (line 1))
+  Downloading https://files.pythonhosted.org/packages/76/ae/44b03b253d6fade317f32c24d100b3b35c2239807046a4c953c7b89fa49e/itsdangerous-1.1.0-py2.py3-none-any.whl
+Collecting MarkupSafe>=0.23 (from Jinja2>=2.10->flask->-r requirements.txt (line 1))
+  Downloading https://files.pythonhosted.org/packages/b9/2e/64db92e53b86efccfaea71321f597fa2e1b2bd3853d8ce658568f7a13094/MarkupSafe-1.1.1.tar.gz
+Building wheels for collected packages: MarkupSafe
+  Building wheel for MarkupSafe (setup.py): started
+  Building wheel for MarkupSafe (setup.py): finished with status 'done'
+  Stored in directory: /root/.cache/pip/wheels/f2/aa/04/0edf07a1b8a5f5f1aed7580fffb69ce8972edc16a505916a77
+Successfully built MarkupSafe
+Installing collected packages: MarkupSafe, Jinja2, Werkzeug, click, itsdangerous, flask, redis
+Successfully installed Jinja2-2.10.3 MarkupSafe-1.1.1 Werkzeug-0.16.1 click-7.0 flask-1.0.4 itsdangerous-1.1.0 redis-3.3.11
+You are using pip version 19.0.3, however version 19.1.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+Removing intermediate container b52cf7cba5e1
+ ---> 40560a543138
+Step 5/5 : CMD ["python", "app.py"]
+ ---> Running in 2f42eb467206
+Removing intermediate container 2f42eb467206
+ ---> 47652fa0c094
+Successfully built 47652fa0c094
+Successfully tagged python_web:latest
+WARNING: Image for service web was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
+Pulling redis (redis:alpine)...
+alpine: Pulling from library/redis
+df20fa9351a1: Pull complete
+9b8c029ceab5: Pull complete
+e983a1eb737a: Pull complete
+660ad543c5fc: Pull complete
+823cbe4f5025: Pull complete
+e3dd0c30e1c8: Pull complete
+Digest: sha256:6972ee00fd35854dd2925904e23cb047faa004df27c62cba842248c7db6bd99d
+Status: Downloaded newer image for redis:alpine
+Creating python_redis_1 ... done
+Creating python_web_1   ... done
+[root@localhost python]# docker-compose ps
+     Name                   Command               State           Ports         
+--------------------------------------------------------------------------------
+python_redis_1   docker-entrypoint.sh redis ...   Up      6379/tcp              
+python_web_1     python app.py                    Up      0.0.0.0:5000->5000/tcp
+[root@localhost python]# curl localhost:5000
+Hello World! I have been seen 1 times.
+[root@localhost python]# ^C
+[root@localhost python]# cd ..
+[root@localhost docker_tutorial]# cd ..
+[root@localhost opt]# mkdir nginx
+[root@localhost opt]# cd nginx/
+[root@localhost nginx]# docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+6ec8c9369e08: Pull complete 
+d3cb09a117e5: Pull complete 
+7ef2f1459687: Pull complete 
+e4d1bf8c9482: Pull complete 
+795301d236d7: Pull complete 
+Digest: sha256:71834fd6bbaebe4005fde80ed9f2bcf31c52be00b957ddba462b0450004dcafc
+Status: Downloaded newer image for nginx:latest
+docker.io/library/nginx:latest
+[root@localhost nginx]# yum update
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirror.tino.org
+ * extras: mirror.tino.org
+ * updates: mirror.tino.org
+No packages marked for update
+[root@localhost nginx]# docker run -itd --name nginx nginx
+f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e
+[root@localhost nginx]# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+f7663bfed4f3        nginx               "/docker-entrypoint.…"   50 seconds ago      Up 49 seconds       80/tcp                   nginx
+a24ea2397e73        python_web          "python app.py"          10 minutes ago      Up 10 minutes       0.0.0.0:5000->5000/tcp   python_web_1
+fd4c250eb094        redis:alpine        "docker-entrypoint.s…"   10 minutes ago      Up 10 minutes       6379/tcp                 python_redis_1
+[root@localhost nginx]# docker start nginx
+nginx
+[root@localhost nginx]# docker status nginx
+docker: 'status' is not a docker command.
+See 'docker --help'
+[root@localhost nginx]# curl localhost
+curl: (7) Failed connect to localhost:80; Connection refused
+[root@localhost nginx]# docker inspect nginx
+[
+    {
+        "Id": "f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e",
+        "Created": "2020-08-04T11:31:51.021612136Z",
+        "Path": "/docker-entrypoint.sh",
+        "Args": [
+            "nginx",
+            "-g",
+            "daemon off;"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 55356,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2020-08-04T11:31:52.197644555Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:8cf1bfb43ff5d9b05af9b6b63983440f137c6a08320fa7592197c1474ef30241",
+        "ResolvConfPath": "/var/lib/docker/containers/f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e/hostname",
+        "HostsPath": "/var/lib/docker/containers/f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e/hosts",
+        "LogPath": "/var/lib/docker/containers/f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e/f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e-json.log",
+        "Name": "/nginx",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "Capabilities": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "KernelMemory": 0,
+            "KernelMemoryTCP": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/df0a528ca681867293f0a403f2cb0f29e697ff66682e5c01dc02ca872acb3655-init/diff:/var/lib/docker/overlay2/e2810dfcfb3546d396a598127d43fe22b73543c6bc2879f02f2c6bc97e8f689d/diff:/var/lib/docker/overlay2/dec9a64d67537ab708d7029487ab27c9f08ff8928ac6908ee2b72f4e8e38d039/diff:/var/lib/docker/overlay2/1df2bfd86ab1601540afd2a04fe0d88ef7720311654ae23fd98f7583b16a218f/diff:/var/lib/docker/overlay2/8bd2c60d408d7f4d92f52570adf059e77300c0b1fb798d3cc746a435e3133dd8/diff:/var/lib/docker/overlay2/47394fc1feddb4a9c25b72a92327c1a36d828c631d29e1bbcac6611791fb2603/diff",
+                "MergedDir": "/var/lib/docker/overlay2/df0a528ca681867293f0a403f2cb0f29e697ff66682e5c01dc02ca872acb3655/merged",
+                "UpperDir": "/var/lib/docker/overlay2/df0a528ca681867293f0a403f2cb0f29e697ff66682e5c01dc02ca872acb3655/diff",
+                "WorkDir": "/var/lib/docker/overlay2/df0a528ca681867293f0a403f2cb0f29e697ff66682e5c01dc02ca872acb3655/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "f7663bfed4f3",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": true,
+            "OpenStdin": true,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.19.1",
+                "NJS_VERSION=0.4.2",
+                "PKG_RELEASE=1~buster"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "Image": "nginx",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "e0616b69c83e4ac602350213d60a7dd435f0567b50f69b9e178853e27049e7fb",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "80/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/e0616b69c83e",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "b50670726e04b221d835ea0135c236bd2cab7b39e6b5a0c888101585d1283379",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "3a1cfa01052a9d1e29bf978643ae627e17caeb040ec21c7e303426fb5072569d",
+                    "EndpointID": "b50670726e04b221d835ea0135c236bd2cab7b39e6b5a0c888101585d1283379",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+[root@localhost nginx]# docker inspect python
+[]
+Error: No such object: python
+[root@localhost nginx]# cd python
+-bash: cd: python: No such file or directory
+[root@localhost nginx]# cd ..
+[root@localhost opt]# ll
+total 0
+drwx--x--x. 4 root root 28 Aug  4 17:39 containerd
+drwxr-xr-x. 3 root root 20 Aug  4 17:54 docker_tutorial
+drwxr-xr-x. 2 root root  6 Aug  4 18:26 nginx
+drwxr-xr-x. 2 root root  6 Oct 31  2018 rh
+drwxr-xr-x. 2 root root 27 Aug  4 17:35 script
+[root@localhost opt]# cd docker_tutorial/
+[root@localhost docker_tutorial]# cd python/
+[root@localhost python]# docker inspect python
+[]
+Error: No such object: python
+[root@localhost python]# docker inspect nginx
+[
+    {
+        "Id": "f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e",
+        "Created": "2020-08-04T11:31:51.021612136Z",
+        "Path": "/docker-entrypoint.sh",
+        "Args": [
+            "nginx",
+            "-g",
+            "daemon off;"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 55356,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2020-08-04T11:31:52.197644555Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:8cf1bfb43ff5d9b05af9b6b63983440f137c6a08320fa7592197c1474ef30241",
+        "ResolvConfPath": "/var/lib/docker/containers/f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e/hostname",
+        "HostsPath": "/var/lib/docker/containers/f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e/hosts",
+        "LogPath": "/var/lib/docker/containers/f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e/f7663bfed4f3b76d98911f6a549263dc78495a58b43aa7b303550a21af3fdf3e-json.log",
+        "Name": "/nginx",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "Capabilities": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "KernelMemory": 0,
+            "KernelMemoryTCP": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/df0a528ca681867293f0a403f2cb0f29e697ff66682e5c01dc02ca872acb3655-init/diff:/var/lib/docker/overlay2/e2810dfcfb3546d396a598127d43fe22b73543c6bc2879f02f2c6bc97e8f689d/diff:/var/lib/docker/overlay2/dec9a64d67537ab708d7029487ab27c9f08ff8928ac6908ee2b72f4e8e38d039/diff:/var/lib/docker/overlay2/1df2bfd86ab1601540afd2a04fe0d88ef7720311654ae23fd98f7583b16a218f/diff:/var/lib/docker/overlay2/8bd2c60d408d7f4d92f52570adf059e77300c0b1fb798d3cc746a435e3133dd8/diff:/var/lib/docker/overlay2/47394fc1feddb4a9c25b72a92327c1a36d828c631d29e1bbcac6611791fb2603/diff",
+                "MergedDir": "/var/lib/docker/overlay2/df0a528ca681867293f0a403f2cb0f29e697ff66682e5c01dc02ca872acb3655/merged",
+                "UpperDir": "/var/lib/docker/overlay2/df0a528ca681867293f0a403f2cb0f29e697ff66682e5c01dc02ca872acb3655/diff",
+                "WorkDir": "/var/lib/docker/overlay2/df0a528ca681867293f0a403f2cb0f29e697ff66682e5c01dc02ca872acb3655/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "f7663bfed4f3",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": true,
+            "OpenStdin": true,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.19.1",
+                "NJS_VERSION=0.4.2",
+                "PKG_RELEASE=1~buster"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "Image": "nginx",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "e0616b69c83e4ac602350213d60a7dd435f0567b50f69b9e178853e27049e7fb",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "80/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/e0616b69c83e",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "b50670726e04b221d835ea0135c236bd2cab7b39e6b5a0c888101585d1283379",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "3a1cfa01052a9d1e29bf978643ae627e17caeb040ec21c7e303426fb5072569d",
+                    "EndpointID": "b50670726e04b221d835ea0135c236bd2cab7b39e6b5a0c888101585d1283379",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+[root@localhost python]# cd ../..
+[root@localhost opt]# cd nginx/
+[root@localhost nginx]# ^C
+[root@localhost nginx]# curl localhost
+curl: (7) Failed connect to localhost:80; Connection refused
+[root@localhost nginx]# curl localhost:80
+curl: (7) Failed connect to localhost:80; Connection refused
+[root@localhost nginx]# curl 172.17.0.2
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+[root@localhost nginx]# ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=128 time=50.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=128 time=36.1 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=128 time=27.4 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=128 time=39.3 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=128 time=31.2 ms
+64 bytes from 8.8.8.8: icmp_seq=6 ttl=128 time=40.1 ms
+64 bytes from 8.8.8.8: icmp_seq=7 ttl=128 time=30.4 ms
+64 bytes from 8.8.8.8: icmp_seq=8 ttl=128 time=30.9 ms
+64 bytes from 8.8.8.8: icmp_seq=9 ttl=128 time=28.9 ms
+64 bytes from 8.8.8.8: icmp_seq=10 ttl=128 time=35.1 ms
+64 bytes from 8.8.8.8: icmp_seq=11 ttl=128 time=45.4 ms
+64 bytes from 8.8.8.8: icmp_seq=12 ttl=128 time=65.1 ms
+64 bytes from 8.8.8.8: icmp_seq=13 ttl=128 time=29.1 ms
+64 bytes from 8.8.8.8: icmp_seq=14 ttl=128 time=35.3 ms
+64 bytes from 8.8.8.8: icmp_seq=15 ttl=128 time=31.7 ms
+64 bytes from 8.8.8.8: icmp_seq=16 ttl=128 time=30.8 ms
+64 bytes from 8.8.8.8: icmp_seq=17 ttl=128 time=28.0 ms
+64 bytes from 8.8.8.8: icmp_seq=18 ttl=128 time=29.6 ms
+64 bytes from 8.8.8.8: icmp_seq=19 ttl=128 time=34.3 ms
+64 bytes from 8.8.8.8: icmp_seq=20 ttl=128 time=28.4 ms
+64 bytes from 8.8.8.8: icmp_seq=21 ttl=128 time=35.4 ms
+64 bytes from 8.8.8.8: icmp_seq=22 ttl=128 time=29.4 ms
+64 bytes from 8.8.8.8: icmp_seq=23 ttl=128 time=32.2 ms
+64 bytes from 8.8.8.8: icmp_seq=24 ttl=128 time=32.1 ms
+64 bytes from 8.8.8.8: icmp_seq=25 ttl=128 time=34.9 ms
+64 bytes from 8.8.8.8: icmp_seq=26 ttl=128 time=27.7 ms
+64 bytes from 8.8.8.8: icmp_seq=27 ttl=128 time=30.5 ms
+64 bytes from 8.8.8.8: icmp_seq=28 ttl=128 time=53.1 ms
+
+64 bytes from 8.8.8.8: icmp_seq=29 ttl=128 time=31.4 ms
+64 bytes from 8.8.8.8: icmp_seq=30 ttl=128 time=28.9 ms
+
+64 bytes from 8.8.8.8: icmp_seq=31 ttl=128 time=30.5 ms
+64 bytes from 8.8.8.8: icmp_seq=32 ttl=128 time=32.0 ms
+64 bytes from 8.8.8.8: icmp_seq=33 ttl=128 time=36.4 ms
+64 bytes from 8.8.8.8: icmp_seq=34 ttl=128 time=37.3 ms
+64 bytes from 8.8.8.8: icmp_seq=35 ttl=128 time=31.8 ms
+64 bytes from 8.8.8.8: icmp_seq=36 ttl=128 time=40.6 ms
+64 bytes from 8.8.8.8: icmp_seq=37 ttl=128 time=31.7 ms
+64 bytes from 8.8.8.8: icmp_seq=38 ttl=128 time=47.3 ms
+64 bytes from 8.8.8.8: icmp_seq=39 ttl=128 time=32.7 ms
+64 bytes from 8.8.8.8: icmp_seq=40 ttl=128 time=29.5 ms
+64 bytes from 8.8.8.8: icmp_seq=41 ttl=128 time=31.1 ms
+64 bytes from 8.8.8.8: icmp_seq=42 ttl=128 time=37.2 ms
+64 bytes from 8.8.8.8: icmp_seq=43 ttl=128 time=53.4 ms
+64 bytes from 8.8.8.8: icmp_seq=44 ttl=128 time=34.1 ms
+64 bytes from 8.8.8.8: icmp_seq=45 ttl=128 time=44.2 ms
+64 bytes from 8.8.8.8: icmp_seq=46 ttl=128 time=26.8 ms
+^C
+--- 8.8.8.8 ping statistics ---
+46 packets transmitted, 46 received, 0% packet loss, time 45083ms
+rtt min/avg/max/mdev = 26.807/35.256/65.128/7.951 ms
+[root@localhost nginx]# 
+
